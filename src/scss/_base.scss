@@ -1,0 +1,25 @@
+html {
+    font-size: 62.5%;
+  }
+  
+  body {
+    background: $color-white;
+    box-sizing: border-box;
+    color: $color-black;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.8rem;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+.ghost {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px !important;
+  left: -9999px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: auto !important;
+  width: 1px !important;
+}

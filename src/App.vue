@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="site-wrapper">
+    <div class="site-wrapper__header">
+      <the-header></the-header>
+    </div>
+    <div class="site-wrapper__main">
+      <main class="site-content" role="main">
+        <search-bar></search-bar>
+        <router-view></router-view>
+      </main>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheHeader from './layout/TheHeader.vue'
+import SearchBar from './components/SearchBar/SearchBar.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TheHeader,
+    SearchBar,
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import './scss/base';
+
+.site-content {
+    margin: 0 auto;
+    max-width: 768px;
+    padding: 0 20px;
+    width: 100%;
 }
 </style>

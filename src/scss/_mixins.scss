@@ -1,0 +1,18 @@
+@mixin hover {
+    &:hover,
+    &:focus,
+    &:focus-within {
+        @content;
+    }
+}
+
+// Set width and height for element
+@mixin size($width, $height: $width) {
+    height: $height;
+    width: $width;
+}
+
+// Set transition for element with settings
+@mixin transition($prop: all, $duration: 250ms, $easing: ease-in-out, $delay: 0ms) {
+    transition: $prop $duration $easing $delay;
+}
