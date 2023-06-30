@@ -1,8 +1,19 @@
 <template>
     <div class="svg-wrapper" aria-hidden="true">
-        <slot></slot>
+        <font-awesome-icon :icon="[prefix, iconName]"></font-awesome-icon>
     </div>
 </template>
+
+<script>
+import FontAwesomeIcon from '../assets/fonts/fortawesome/fortawesome-icons.js';
+
+export default {
+    components: {
+        FontAwesomeIcon,
+    },
+    props: ['prefix', 'iconName']
+}
+</script>
 
 <style scoped lang="scss">
 .svg-wrapper {

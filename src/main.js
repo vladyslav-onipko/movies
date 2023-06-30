@@ -1,12 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import FontAwesomeIcon from './assets/fonts/fortawesome/fortawesome-icons.js';
-
 import router from './js/router.js';
+import BaseButton from './ui/BaseButton.vue';
 
 const app = createApp(App);
 
-app.component('fontawesome-icon', FontAwesomeIcon);
+app.component('base-button', BaseButton);
 app.use(router);
-app.mount('#app');
+
+router.isReady().then(() => {
+    app.mount('#app');
+});

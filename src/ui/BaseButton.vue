@@ -37,22 +37,23 @@ export default {
         background-color: $color-1--1;
         border-color: $color-1--1;
         color: $color-2--2;
-
-        @include hover() {
-            background-color: $color-2--2;
-            border: 1px solid $color-2--2;
-            color: $color-1--1;
-        }
     }
 
     &.is-tertiary {
         border: 1px solid $color-2--2;
         color: $color-2--2;
+
+        @include hover() {
+            background-color: $color-1--1;
+            border-color: $color-1--1;
+            color: $color-2--2;
+        }
     }
 
     @include hover() {
-        background-color: $color-1--1;
-        border-color: $color-1--1;
+        background-color: $color-1--2;
+        border-color: $color-1--2;
+        color: $color-2--2;
     }
 }
 </style>

@@ -37,7 +37,7 @@ export default {
 
         &.is-active,
         &.is-ex-active {
-            background-color: $color-1--1;
+            border: 1px solid $color-2--2;
         }
     }
 }

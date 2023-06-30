@@ -1,16 +1,37 @@
 html {
-    font-size: 62.5%;
-  }
+  font-size: 62.5%;
+}
   
-  body {
-    background: $color-white;
-    box-sizing: border-box;
-    color: $color-black;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.8rem;
-    margin: 0;
-    overflow-x: hidden;
-  }
+body {
+  background: $color-white;
+  box-sizing: border-box;
+  color: $color-black;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.8rem;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+img {
+  @include size(100%);
+  font-family: "object-fit: cover; object-position: center;";
+  object-fit: cover;
+}
+
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-size: 2.2rem;
+}
+
+p {
+  color: $color-gray;
+  font-size: 1.8rem;
+}
 
 .ghost {
   border: 0 !important;

@@ -6,7 +6,11 @@
     <div class="site-wrapper__main">
       <main class="site-content" role="main">
         <search-bar></search-bar>
-        <router-view></router-view>
+        <router-view v-slot="{ Component, route }">
+          <transition name="route" mode="out-in">
+            <component :is="Component" :key="route.path"></component>
+          </transition>
+        </router-view>
       </main>
     </div>
   </div>
@@ -27,11 +31,19 @@ export default {
 
 <style lang="scss">
 @import './scss/base';
+@import './scss/animations';
+
+.site-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    width: 100%;
+}
 
 .site-content {
     margin: 0 auto;
     max-width: 768px;
     padding: 0 20px;
-    width: 100%;
 }
 </style>

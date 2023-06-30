@@ -1,7 +1,7 @@
 const links = [
     {
-        href: '/films',
-        text: 'Films'
+        href: '/movies',
+        text: 'Movies'
     },
     {
         href: '/favorites',
