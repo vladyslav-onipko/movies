@@ -1,20 +1,33 @@
 <template>
     <div class="form-control">
         <label :for="id" :class="labelVisibility">{{ label }}</label>
-        <input :type="inputType" :id="id" :name="id" :placeholder="placeholder">
+        <input 
+            :type="inputType" 
+            :id="id" :name="id" 
+            :placeholder="placeholder" 
+            :value="modelValue" 
+            @input="updateValue"
+        >
     </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
-    props: ['id', 'type', 'label', 'placeholder'],
-    setup(props) {
+    props: ['id', 'type', 'label', 'placeholder', 'modelValue'],
+    emits: ['update:modelValue'],
+    setup(props, context) {
         const inputType = computed(() => props.type ? props.type : 'text');
         const labelVisibility = computed(() => !props.label ? 'ghost': '' );
 
-        return { inputType, labelVisibility }
+        const inputValue = ref(null);
+
+        const updateValue = (e) => {
+            context.emit('update:modelValue', e.target.value);
+        }
+
+        return { inputType, labelVisibility, inputValue, updateValue }
     }
 }
 </script>

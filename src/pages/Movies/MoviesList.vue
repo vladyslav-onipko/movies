@@ -1,18 +1,32 @@
 <template>
-    <section class="movies">
-        <h2 class="ghost">Films</h2>
-        <ul class="movies__list">
-            <movie-item></movie-item>
-            <movie-item></movie-item>
-        </ul>
-    </section>
+    <base-section class="movies" title="Movies" :hiddenTitle="true">
+        <transition-group class="movies__list" tag="ul" name="movies-list">
+            <movie-item v-for="movie in movies" 
+                :key="movie.id" 
+                :id="movie.id" 
+                :img="movie.img" 
+                :title="movie.title" 
+                :description="movie.description"
+            ></movie-item>
+        </transition-group>
+    </base-section>
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+
 import MovieItem from '../../components/Movies/MovieItem.vue';
+
 export default {
     components: {
         MovieItem,
+    },
+    setup() {
+        const store = useStore();
+        const movies = computed(() => store.getters.movies);
+
+        return { movies };
     }
 }
 </script>
@@ -20,15 +34,12 @@ export default {
 <style lang="scss" scoped>
 .movies {
     @include size(100%);
-    border: 2px solid $color-1--2;
-    border-radius: 4px;
+    overflow: hidden;
     
     &__list {
         list-style: none;
         margin: 0;
-        max-height: 700px;
-        overflow-y: auto;
-        padding: 0 20px;
+        padding: 30px 20px;
     }
 }
 </style>

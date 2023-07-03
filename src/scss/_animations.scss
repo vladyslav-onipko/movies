@@ -16,3 +16,34 @@
 .route-leave-from {
   opacity: 1;
 }
+
+// movies list add and remove animation
+
+.movies-list-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.movies-list-enter-active {
+  transition: all 1s ease-out;
+}
+
+.movies-list-enter-to,
+.movies-list-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.movies-list-leave-active {
+  position: absolute;
+  transition: all 1s ease-in;
+}
+
+.movies-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.movies-list-move {
+  transition: transform 0.8s ease;
+}

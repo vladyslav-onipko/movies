@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <base-button modifier="is-tertiary is-login" link="true" to="/">Login</base-button>
-        <base-button modifier="is-secondary is-singup" link="true" to="/">Sing up</base-button>
+        <base-button modifier="is-secondary is-singup" link="true" to="/">Sign up</base-button>
     </div>
 </template>
 
