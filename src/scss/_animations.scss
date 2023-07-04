@@ -1,49 +1,59 @@
-// route switch animation
-.route-enter-from,
-.route-leave-to {
+// fade animation
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 
-.route-enter-active {
+.fade-enter-active {
   transition: opacity 0.3s ease-out;
 }
 
-.route-leave-active {
+.fade-leave-active {
   transition: opacity 0.3s ease-in;
 }
 
-.route-enter-to,
-.route-leave-from {
+.fade-enter-to,
+.fade-leave-from {
   opacity: 1;
 }
 
-// movies list add and remove animation
+// modal animation
 
-.movies-list-enter-from {
-  opacity: 0;
-  transform: translateX(-30px);
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.movies-list-enter-active {
-  transition: all 1s ease-out;
+// list animation
+
+@keyframes list-enter {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
-.movies-list-enter-to,
-.movies-list-leave-from {
-  opacity: 1;
-  transform: translateX(0);
-}
+@keyframes list-leave {
+  from { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 
-.movies-list-leave-active {
-  position: absolute;
-  transition: all 1s ease-in;
-}
-
-.movies-list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-.movies-list-move {
-  transition: transform 0.8s ease;
+  to { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
 }

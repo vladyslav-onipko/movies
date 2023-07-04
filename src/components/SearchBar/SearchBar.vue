@@ -1,14 +1,20 @@
 <template>
+    <base-modal :show="!!error" title="An error ocuured!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-modal>
     <section class="search-bar">
         <h2 class="ghost">Search Bar</h2>
         <base-form :actions="true" @submit.prevent="submitForm">
             <base-input 
-                label="Search" 
+                label="Search"
                 id="search" 
                 name="search" 
                 placeholder="Start serching film.."
-                v-model="movieName"
+                v-model.trim="movieName"
             ></base-input>
+            <transition name="fade" mode="out-in">
+                <error-message v-if="!inputIsValid">field must not be empty</error-message>
+            </transition>
             <template v-slot:actions>
                 <base-button type="submit">
                     <base-icon prefix="fas" iconName="search"></base-icon>
@@ -19,29 +25,42 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
 
 import BaseForm from '../../ui/BaseForm.vue';
 import BaseInput from '../../ui/BaseInput.vue';
-import BaseIcon from '../../ui/BaseIcon.vue';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.vue';
 
 export default {
     components: {
         BaseForm,
         BaseInput,
-        BaseIcon,
+        ErrorMessage
     },
     setup() {
         const store = useStore();
         const router = useRouter();
         const route = useRoute();
-        const moviesURL = '/movies';
-        const movieName = ref(null);
 
-        const submitForm = () => {
-            store.dispatch('saveMovie', { movie: movieName.value });
+        const movieName = ref(null);
+        const inputIsValid = ref(true);
+        const error = ref(null);
+
+        const moviesURL = '/movies';
+
+        const submitForm = async () => {
+            if (!movieName.value) {
+                inputIsValid.value = false;
+                return;
+            }
+
+            try {
+                await store.dispatch('saveMovie', { movie: movieName.value });
+            } catch (e) {
+                error.value = e.message || 'Something went wrong';
+            }
             
             if (route.path !== moviesURL) {
                 router.push(movieName);
@@ -50,7 +69,17 @@ export default {
             movieName.value = '';
         };
 
-        return { movieName, submitForm }
+        const handleError = () => {
+            error.value = null;
+        };
+
+        watch(movieName, (newValue) => {
+            if (newValue.length) {
+                inputIsValid.value = true;
+            }
+        });
+
+        return { movieName, submitForm, inputIsValid, error, handleError }
     }
 }
 </script>
@@ -62,6 +91,10 @@ export default {
     .form {
         align-items: center;
         display: flex;
+
+        .error-message {
+            left: 80px;
+        }
     }
 
     .form-control {

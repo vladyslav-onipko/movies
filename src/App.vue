@@ -7,7 +7,7 @@
       <main class="site-content" role="main">
         <search-bar></search-bar>
         <router-view v-slot="{ Component, route }">
-          <transition name="route" mode="out-in">
+          <transition name="fade" mode="out-in">
             <component :is="Component" :key="route.path"></component>
           </transition>
         </router-view>

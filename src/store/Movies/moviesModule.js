@@ -31,8 +31,10 @@ const moviesModule = {
             const response = await fetch(`http://www.omdbapi.com/?t=${data.movie}&apikey=${MOVIE_API_KEY}`);
             const responseData = await response.json();
             
-            if (!response.ok) {
-                ///
+            console.log(responseData);
+
+            if (responseData.Response === 'False') {
+                throw new Error(responseData.Error || 'Faild to fetch!');
             }
 
             const movie = {
@@ -42,13 +44,15 @@ const moviesModule = {
                 description: responseData.Plot,
             }
 
-            console.log(responseData);
             context.state.movies.unshift(movie);
         }
     },
     getters: {
         movies(state) {
             return state.movies;
+        },
+        error(state) {
+            return state.error;
         }
     }
 }

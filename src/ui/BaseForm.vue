@@ -16,5 +16,6 @@ export default {
 <style lang="scss" scoped>
 .form {
     display: block;
+    position: relative;
 }
 </style>

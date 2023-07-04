@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 export default {
     props: ['id', 'type', 'label', 'placeholder', 'modelValue'],
@@ -21,13 +21,11 @@ export default {
         const inputType = computed(() => props.type ? props.type : 'text');
         const labelVisibility = computed(() => !props.label ? 'ghost': '' );
 
-        const inputValue = ref(null);
-
         const updateValue = (e) => {
             context.emit('update:modelValue', e.target.value);
         }
 
-        return { inputType, labelVisibility, inputValue, updateValue }
+        return { inputType, labelVisibility, updateValue };
     }
 }
 </script>

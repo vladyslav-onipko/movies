@@ -1,14 +1,7 @@
 <template>
     <base-section class="movies" title="Movies" :hiddenTitle="true">
-        <transition-group class="movies__list" tag="ul" name="movies-list">
-            <movie-item v-for="movie in movies" 
-                :key="movie.id" 
-                :id="movie.id" 
-                :img="movie.img" 
-                :title="movie.title" 
-                :description="movie.description"
-            ></movie-item>
-        </transition-group>
+        <tools-bar></tools-bar>
+        <movies-list :movies="movies"></movies-list>
     </base-section>
 </template>
 
@@ -16,11 +9,13 @@
 import { useStore } from 'vuex';
 import { computed } from 'vue';
 
-import MovieItem from '../../components/Movies/MovieItem.vue';
+import MoviesList from '../../components/Movies/MoviesList.vue';
+import ToolsBar from '../../components/Tools/ToolsBar.vue';
 
 export default {
     components: {
-        MovieItem,
+        MoviesList,
+        ToolsBar
     },
     setup() {
         const store = useStore();
@@ -35,11 +30,5 @@ export default {
 .movies {
     @include size(100%);
     overflow: hidden;
-    
-    &__list {
-        list-style: none;
-        margin: 0;
-        padding: 30px 20px;
-    }
 }
 </style>
