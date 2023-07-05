@@ -1,6 +1,6 @@
 <template>
     <label :for="id" :class="labelVisibility">{{ label }}</label>
-    <select :name="id" :id="id">
+    <select :name="id" :id="id" :value="modelValue" @input="updateValue" @change="changeValue">
         <slot></slot>
     </select>
 </template>
@@ -9,11 +9,19 @@
 import { computed } from 'vue';
 
 export default {
-    props: ['id', 'label'],
-    setup(props) {
+    props: ['id', 'label', 'modelValue'],
+    emits: ['update:modelValue', 'change-select'],
+    setup(props, context) {
         const labelVisibility = computed(() => !props.label ? 'ghost': '' );
+        const updateValue = (e) => {
+            context.emit('update:modelValue', e.target.value);
+        }
 
-        return { labelVisibility };
+        const changeValue = (e) => {
+            context.emit('change-select', e.target);
+        }
+
+        return { labelVisibility, updateValue, changeValue };
     }
 }
 </script>
@@ -24,7 +32,7 @@ select {
     background-color: $color-white;
     background-image: linear-gradient(to top, $color-white, $color-white 33%);
     border: 1px solid $color-1--2;
-    border-radius: 0.25em;
+    border-radius: 4px;
     color: $color-1--1;
     cursor: pointer;
     font-size: 1.25rem;

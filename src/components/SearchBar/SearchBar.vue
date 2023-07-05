@@ -27,7 +27,7 @@
 <script>
 import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import BaseForm from '../../ui/BaseForm.vue';
 import BaseInput from '../../ui/BaseInput.vue';
@@ -42,13 +42,10 @@ export default {
     setup() {
         const store = useStore();
         const router = useRouter();
-        const route = useRoute();
 
         const movieName = ref(null);
         const inputIsValid = ref(true);
         const error = ref(null);
-
-        const moviesURL = '/movies';
 
         const submitForm = async () => {
             if (!movieName.value) {
@@ -57,15 +54,12 @@ export default {
             }
 
             try {
-                await store.dispatch('saveMovie', { movie: movieName.value });
+                await store.dispatch('addMovie', movieName.value);
             } catch (e) {
                 error.value = e.message || 'Something went wrong';
             }
             
-            if (route.path !== moviesURL) {
-                router.push(movieName);
-            }
-
+            router.push('/');
             movieName.value = '';
         };
 

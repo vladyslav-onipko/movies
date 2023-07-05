@@ -1,5 +1,5 @@
 <template>
-    <transition-group class="movies-list" tag="ul" name="movies-list" v-if="hasMovies">
+    <transition-group class="movies-list" tag="ul" name="movies-list" v-if="movies.length">
         <movie-item v-for="movie in movies" 
             :key="movie.id" 
             :id="movie.id" 
@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-
 import MovieItem from './MovieItem.vue';
 import MoviePlaceholder from './MoviePlaceholder.vue';
 
@@ -22,11 +20,6 @@ export default {
     components: {
         MovieItem,
         MoviePlaceholder
-    },
-    setup(props) {
-        const hasMovies = computed(() => props.movies.length > 0);
-
-        return { hasMovies };
     }
 }
 </script>
