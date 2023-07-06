@@ -56,6 +56,7 @@ export default {
     &__picture {
         flex-shrink: 0;
         margin-right: 15px;
+        height: 200px;
         width: 30%;
     }
 
@@ -73,7 +74,6 @@ export default {
     }
 
     &__description {
-        font-size: 1.6rem;
         margin-bottom: 10px;
     }
 

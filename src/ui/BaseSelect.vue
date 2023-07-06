@@ -1,18 +1,19 @@
 <template>
-    <label :for="id" :class="labelVisibility">{{ label }}</label>
-    <select :name="id" :id="id" :value="modelValue" @input="updateValue" @change="changeValue">
+    <label :for="id" :class="!hiddenLabel || 'ghost'">{{ label }}</label>
+    <select :name="id" :id="id" ref="selectTarget" :value="modelValue" @input="updateValue" @change="changeValue">
         <slot></slot>
     </select>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { ref } from 'vue';
 
 export default {
-    props: ['id', 'label', 'modelValue'],
+    props: ['id', 'label', 'modelValue', 'hiddenLabel'],
     emits: ['update:modelValue', 'change-select'],
-    setup(props, context) {
-        const labelVisibility = computed(() => !props.label ? 'ghost': '' );
+    setup(_, context) {
+        const selectTarget = ref(null);
+
         const updateValue = (e) => {
             context.emit('update:modelValue', e.target.value);
         }
@@ -21,7 +22,7 @@ export default {
             context.emit('change-select', e.target);
         }
 
-        return { labelVisibility, updateValue, changeValue };
+        return { updateValue, changeValue, selectTarget };
     }
 }
 </script>

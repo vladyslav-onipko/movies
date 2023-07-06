@@ -20,17 +20,12 @@ const MOVIE_API_KEY = '21081c5e';
 const moviesModule = {
     state() {
         return {
-            movies: DUMMY_MOVIES,
-            filteredMovies: []
+            movies: DUMMY_MOVIES
         }
     },
     mutations: {
         removeMovie(state, movieID) {
-            state.filteredMovies = state.filteredMovies.filter(movie => movie.id !== movieID);
             state.movies = state.movies.filter(movie => movie.id !== movieID);
-        },
-        filterMovies(state, genre) {
-            state.filteredMovies = genre ? state.movies.filter(movie => movie.genre.includes(genre)) : [...state.movies];
         }
     },
     actions: {
@@ -57,15 +52,11 @@ const moviesModule = {
             console.log(movie);
 
             context.state.movies.unshift(movie);
-            context.commit('filterMovies', '');
         }
     },
     getters: {
         movies(state) {
             return state.movies;
-        },
-        filteredMovies(state) {
-            return state.filteredMovies;
         }
     }
 }

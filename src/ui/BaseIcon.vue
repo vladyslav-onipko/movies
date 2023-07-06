@@ -1,7 +1,7 @@
 <template>
-    <div class="svg-wrapper" aria-hidden="true">
+    <span class="svg-wrapper" aria-hidden="true">
         <font-awesome-icon :icon="[prefix, iconName]"></font-awesome-icon>
-    </div>
+    </span>
 </template>
 
 <script>
@@ -17,6 +17,7 @@ export default {
 
 <style scoped lang="scss">
 .svg-wrapper {
+    display: block;
     height: 20px;
     width: 20px;
 

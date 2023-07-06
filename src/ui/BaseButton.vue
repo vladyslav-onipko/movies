@@ -50,6 +50,16 @@ export default {
         }
     }
 
+    &.is-only-icon {
+        border: none;
+        padding: 0;
+
+        @include hover() {
+        background-color: transparent;
+        color: $color-1--1;
+    }
+    }
+
     @include hover() {
         background-color: $color-1--2;
         border-color: $color-1--2;

@@ -16,7 +16,7 @@
                 <error-message v-if="!inputIsValid">field must not be empty</error-message>
             </transition>
             <template v-slot:actions>
-                <base-button type="submit">
+                <base-button type="submit" title="search">
                     <base-icon prefix="fas" iconName="search"></base-icon>
                 </base-button>
             </template>
@@ -59,7 +59,7 @@ export default {
                 error.value = e.message || 'Something went wrong';
             }
             
-            router.push('/');
+            router.push('/movies');
             movieName.value = '';
         };
 
@@ -99,6 +99,7 @@ export default {
         label {
             color: $color-1--2;
             font-size: 2.2rem;
+            font-weight: 700;
             margin-right: 10px;
         }
 

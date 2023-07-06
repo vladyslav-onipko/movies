@@ -1,6 +1,6 @@
 <template>
     <div class="form-control">
-        <label :for="id" :class="labelVisibility">{{ label }}</label>
+        <label :for="id" :class="!hiddenLabel || 'ghost'">{{ label }}</label>
         <input 
             :type="inputType" 
             :id="id" :name="id" 
@@ -15,17 +15,16 @@
 import { computed } from 'vue';
 
 export default {
-    props: ['id', 'type', 'label', 'placeholder', 'modelValue'],
+    props: ['id', 'type', 'label', 'placeholder', 'modelValue', 'hiddenLabel'],
     emits: ['update:modelValue'],
     setup(props, context) {
         const inputType = computed(() => props.type ? props.type : 'text');
-        const labelVisibility = computed(() => !props.label ? 'ghost': '' );
 
         const updateValue = (e) => {
             context.emit('update:modelValue', e.target.value);
         }
 
-        return { inputType, labelVisibility, updateValue };
+        return { inputType, updateValue };
     }
 }
 </script>

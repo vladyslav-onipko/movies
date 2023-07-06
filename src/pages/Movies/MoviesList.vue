@@ -1,13 +1,13 @@
 <template>
     <base-section class="movies" title="Movies" :hiddenTitle="true">
         <tools-bar></tools-bar>
-        <movies-list :movies="movies"></movies-list>
+        <movies-list :movies="filteredMovies"></movies-list>
     </base-section>
 </template>
 
 <script>
 import { useStore } from 'vuex';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import MoviesList from '../../components/Movies/MoviesList.vue';
@@ -21,16 +21,15 @@ export default {
     setup() {
         const route = useRoute();
         const store = useStore();
-        const movies = computed(() => store.getters.filteredMovies);
+        
+        const movies = computed(() => store.getters.movies);
         const query = computed(() => route.query.filter);
 
-        store.commit('filterMovies', query.value);
+        const filteredMovies = computed(() => {
+            return query.value ? movies.value.filter(movie => movie.genre.includes(query.value)) : [...movies.value];
+        });
 
-        watch(query, (newQuery) => {
-           store.commit('filterMovies', newQuery);
-        })
-
-        return { movies };
+        return { filteredMovies };
     }
 }
 </script>
