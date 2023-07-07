@@ -1,7 +1,7 @@
 <template>
-    <base-section class="movies" title="Movies" :hiddenTitle="true">
+    <base-section class="movies-favorites" title="Movies" :hiddenTitle="true">
         <tools-bar></tools-bar>
-        <movies-list :movies="movies"></movies-list>
+        <movies-list :movies="favoriteMovies"></movies-list>
     </base-section>
 </template>
 
@@ -19,9 +19,9 @@ export default {
     },
     setup() {
         const store = useStore();
-        const movies = computed(() => store.getters.movies);
+        const favoriteMovies = computed(() => store.getters.favorites);
 
-        return { movies };
+        return { favoriteMovies };
     }
 }
 </script>

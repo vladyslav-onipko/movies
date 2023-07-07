@@ -1,7 +1,12 @@
 <template>
     <nav class="nav" role="navigation">
         <ul class="nav__list">
-            <nav-item v-for="link in navLinks" :to="link.href" :text="link.text" :key="link.text"></nav-item>
+            <nav-item v-for="link in navLinks" 
+                :to="link.href" 
+                :text="link.text" 
+                :key="link.text"
+                :badge="link.hasBadge">
+            </nav-item>
         </ul>
     </nav>
 </template>

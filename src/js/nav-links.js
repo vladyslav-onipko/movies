@@ -1,11 +1,13 @@
 const links = [
     {
         href: '/movies',
-        text: 'Movies'
+        text: 'Movies',
+        hasBadge: false
     },
     {
-        href: '/favorites',
-        text: 'Collection'
+        href: '/movies/favorites',
+        text: 'Collection',
+        hasBadge: true
     }
 ];
 

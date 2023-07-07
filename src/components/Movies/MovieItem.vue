@@ -28,10 +28,11 @@ export default {
     setup(props) {
         const store = useStore();
         const route = useRoute();
-        const detailLink = computed(() => route.path + '/' + props.id);
+        const detailLink = computed(() => '/movies' + '/' + props.id);
+        const moviesArr = route.path.split('/').slice(-1)[0];
 
         const removeMovie = () => {
-            store.commit('removeMovie', props.id);
+            store.commit('removeMovie', { from: moviesArr, id: props.id });
         }
 
         return { detailLink, removeMovie };

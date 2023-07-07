@@ -26,7 +26,7 @@ export default {
         const selectFilter = ref(null);
 
         const changeHandler = (target) => {
-            const link = target.value ? `${route.path}?filter=${target.value}` : '/'
+            const link = target.value ? `${route.path}?filter=${target.value}` : route.path;
             router.push(link);
         };
 

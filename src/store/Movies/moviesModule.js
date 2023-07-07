@@ -4,14 +4,16 @@ const DUMMY_MOVIES = [
         img: 'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg',
         title: 'title',
         description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
-        genre: 'Crime'
+        genre: 'Crime',
+        favorite: false,
     },
     {
         id: 'm2',
         img: 'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg',
         title: 'title 2',
         description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
-        genre: 'Comedy'
+        genre: 'Comedy',
+        favorite: false
     }
 ]
 
@@ -20,12 +22,16 @@ const MOVIE_API_KEY = '21081c5e';
 const moviesModule = {
     state() {
         return {
-            movies: DUMMY_MOVIES
+            movies: DUMMY_MOVIES,
+            favorites: [...DUMMY_MOVIES]
         }
     },
     mutations: {
-        removeMovie(state, movieID) {
-            state.movies = state.movies.filter(movie => movie.id !== movieID);
+        removeMovie(state, payload) {
+            state[payload.from] = state[payload.from].filter(movie => movie.id !== payload.id);
+        },
+        addToFavorite(state, movie) {
+            state.favorites.unshift(movie);
         }
     },
     actions: {
@@ -46,7 +52,8 @@ const moviesModule = {
                 genre: data.Genre,
                 rated: data.Rated,
                 year: data.Year,
-                runtime: data.Runtime
+                runtime: data.Runtime,
+                favorite: false
             }
 
             console.log(movie);
@@ -57,6 +64,12 @@ const moviesModule = {
     getters: {
         movies(state) {
             return state.movies;
+        },
+        favorites(state) {
+            return state.favorites;
+        },
+        favoritesLength(state) {
+            return state.favorites.length;
         }
     }
 }

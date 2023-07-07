@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import MoviesList from '../pages/Movies/MoviesList.vue';
 import MovieDetail from '../pages/Movies/MovieDetail.vue';
-import FavoritesList from '../pages/Favorites/FavoritesList.vue';
+import MoviesFavorites from '../pages/Movies/MoviesFavorites.vue';
 import NotFound from '../pages/NotFound/NotFound.vue';
 
 const router = createRouter({
@@ -11,7 +11,7 @@ const router = createRouter({
         { path: '/', redirect: 'movies' },
         { path: '/movies', component: MoviesList },
         { path: '/movies/:id', component: MovieDetail, props: true },
-        { path: '/favorites', component: FavoritesList },
+        { path: '/movies/favorites', component: MoviesFavorites },
         {path: '/:notFound(.*)', component: NotFound}
     ],
     linkActiveClass: 'is-active',

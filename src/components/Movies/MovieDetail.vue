@@ -2,8 +2,12 @@
     <base-section class="movie" title="Movie" :hiddenTitle="true">
         <div class="movie__container">
             <div class="movie__actions is-top">
-                <base-button class="movie__action is-only-icon is-favorite" title="favorite">
-                    <base-icon class="movie__action-icon" prefix="far" iconName="heart"></base-icon>
+                <base-button 
+                    class="movie__action is-only-icon is-favorite" 
+                    :class="{ 'is-active': isFavorite }" 
+                    title="favorite" 
+                    @click="toggleFavoriteMovie">
+                    <base-icon class="movie__action-icon" prefix="fas" iconName="heart"></base-icon>
                 </base-button>
             </div>
             <div class="movie__wrapper">
@@ -39,15 +43,31 @@
 
 <script>
 import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 
 export default {
-  props: ['img', 'title', 'rating', 'rated', 'year', 'genres', 'runtime', 'description'],
+  props: ['id', 'img', 'title', 'rating', 'rated', 'year', 'genres', 'runtime', 'description'],
   setup(props) {
-    const movieGenres = computed(() => props.genres.split(','));
-    const movieYear = computed(() => props.year.match(/\d+/g).join(''));
+    const store = useStore();
+    const movies = store.getters.movies;
+    const favoriteMovie = movies.find(movie => movie.id === props.id);
 
-    return { movieGenres, movieYear };
+    const movieGenres = computed(() => props.genres.split(','));
+    const movieYear = computed(() => parseInt(props.year));
+    const isFavorite = computed(() => favoriteMovie.favorite);
+
+    const toggleFavoriteMovie = () => {
+        if (isFavorite.value) {
+            favoriteMovie.favorite = false;
+            store.commit('removeMovie', { from: 'favorites', id: props.id});
+        } else {
+            favoriteMovie.favorite = true;
+            store.commit('addToFavorite', favoriteMovie);
+        }
+    }
+
+    return { movieGenres, movieYear, isFavorite, toggleFavoriteMovie };
   }
 }
 </script>
@@ -75,15 +95,25 @@ export default {
     }
 
     &__action {
-        &-icon[class] {
+        #{$this}__action-icon[class] {
             @include size(25px);
+        }
+
+        &.is-favorite {
+            @include transition;
+            color: $color-gray;
+
+            &.is-active {
+                color: $color-1--2;
+                transform: scale(1.5);
+            }
         }
 
         &.is-back {
             align-items: center;
             display: flex;
 
-            .movie__action-text {
+            #{$this}__action-text {
                 margin-left: 5px;
             }
         }

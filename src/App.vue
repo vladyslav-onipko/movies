@@ -36,9 +36,14 @@ export default {
 .site-wrapper {
     display: flex;
     flex-direction: column;
+    height: 100vh;
     min-height: 100vh;
     overflow-x: hidden;
     width: 100%;
+
+    &__main {
+      height: 100%;
+    }
 }
 
 .site-content {
