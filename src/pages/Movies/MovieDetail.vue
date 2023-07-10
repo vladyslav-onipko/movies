@@ -25,7 +25,7 @@ export default {
     setup(props) {
         const store = useStore();
         const selectedMovie = ref(null);
-        const movies = store.getters.movies;
+        const movies = store.getters.movies; // Need to fix bug with getting movie from movie array if movie does not exist
 
         selectedMovie.value = movies.find(movie => movie.id === props.id);
         

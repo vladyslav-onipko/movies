@@ -19,6 +19,7 @@ export default {
 <style lang="scss" scoped>
 .tools-bar {
     display: flex;
+    font-size: 1.2rem;
     justify-content: center;
     margin: 20px auto 0;
     padding: 5px;

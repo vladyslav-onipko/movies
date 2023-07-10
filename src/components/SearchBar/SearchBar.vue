@@ -54,7 +54,7 @@ export default {
             }
 
             try {
-                await store.dispatch('addMovie', movieName.value);
+                await store.dispatch('saveMovie', movieName.value);
             } catch (e) {
                 error.value = e.message || 'Something went wrong';
             }

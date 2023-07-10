@@ -2,16 +2,15 @@
     <div class="filter-bar">
         <base-select id="filter" label="Filter" ref="selectFilter" :hiddenLabel="true" @changeSelect="changeHandler">
             <option value="">All</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Crime">Crime</option>
-            <option value="Fantasy">Fantasy</option>
+            <option v-for="genre in genres" :value="genre" :key="genre">{{ genre }}</option>
         </base-select>
     </div>
 </template>
 
 <script>
 import { useRouter, useRoute } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
 
 import BaseSelect from '../../ui/BaseSelect.vue';
 
@@ -22,9 +21,16 @@ export default {
     setup() {
         const router = useRouter();
         const route = useRoute();
+        const store = useStore();
 
         const selectFilter = ref(null);
+        const movies = store.getters.movies;
 
+        const genres = computed(() => {
+            const genresArr = movies.map(movie => movie.genre.split(','));
+            return [...new Set(genresArr.flat().map(genre => genre.trim()))];
+        });
+        
         const changeHandler = (target) => {
             const link = target.value ? `${route.path}?filter=${target.value}` : route.path;
             router.push(link);
@@ -34,7 +40,7 @@ export default {
             selectFilter.value.selectTarget.value = route.query.filter ? route.query.filter : '';
         });
 
-        return { changeHandler, selectFilter };
+        return { changeHandler, selectFilter, genres };
     }
 }
 </script>

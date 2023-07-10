@@ -4,7 +4,7 @@ const DUMMY_MOVIES = [
         img: 'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg',
         title: 'title',
         description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
-        genre: 'Crime',
+        genre: 'Crime, Comedy',
         favorite: false,
     },
     {
@@ -30,12 +30,19 @@ const moviesModule = {
         removeMovie(state, payload) {
             state[payload.from] = state[payload.from].filter(movie => movie.id !== payload.id);
         },
-        addToFavorite(state, movie) {
-            state.favorites.unshift(movie);
+        addMovie(state, payload) {
+            state[payload.to].unshift(payload.movie);
+        },
+        checkFavoriteMovie(state, payload) {
+            const isFavAlready = state.favorites.find(movie => movie.title === payload.movie.title);
+            
+            if (isFavAlready) {
+                payload.movie.favorite = isFavAlready.favorite;
+            }
         }
     },
     actions: {
-        async addMovie(context, movieName) {
+        async saveMovie(context, movieName) {
             const response = await fetch(`http://www.omdbapi.com/?t=${movieName}&apikey=${MOVIE_API_KEY}`);
             const data = await response.json();
 
@@ -54,11 +61,11 @@ const moviesModule = {
                 year: data.Year,
                 runtime: data.Runtime,
                 favorite: false
-            }
+            };
 
             console.log(movie);
-
-            context.state.movies.unshift(movie);
+            context.commit('checkFavoriteMovie', { movie });
+            context.commit('addMovie', { to: 'movies', movie });       
         }
     },
     getters: {

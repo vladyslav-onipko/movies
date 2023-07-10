@@ -57,13 +57,14 @@ export default {
     const movieYear = computed(() => parseInt(props.year));
     const isFavorite = computed(() => favoriteMovie.favorite);
 
+    // Need to find more elegant way to write toggle favorite logic
     const toggleFavoriteMovie = () => {
         if (isFavorite.value) {
-            favoriteMovie.favorite = false;
+            favoriteMovie.favorite = !favoriteMovie.favorite;
             store.commit('removeMovie', { from: 'favorites', id: props.id});
         } else {
-            favoriteMovie.favorite = true;
-            store.commit('addToFavorite', favoriteMovie);
+            favoriteMovie.favorite = !favoriteMovie.favorite;
+            store.commit('addMovie', { to: 'favorites', movie: favoriteMovie });
         }
     }
 

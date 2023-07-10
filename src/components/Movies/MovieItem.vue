@@ -29,10 +29,11 @@ export default {
         const store = useStore();
         const route = useRoute();
         const detailLink = computed(() => '/movies' + '/' + props.id);
-        const moviesArr = route.path.split('/').slice(-1)[0];
+        const [moviesCategory] = route.path.split('/').slice(-1);
 
+        // Need to add remove from favorite movie logic
         const removeMovie = () => {
-            store.commit('removeMovie', { from: moviesArr, id: props.id });
+            store.commit('removeMovie', { from: moviesCategory, id: props.id });
         }
 
         return { detailLink, removeMovie };
