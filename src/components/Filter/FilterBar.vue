@@ -24,10 +24,11 @@ export default {
         const store = useStore();
 
         const selectFilter = ref(null);
-        const movies = store.getters.movies;
+        const [moviesSection] = route.path.split('/').slice(-1);
+        const movies = computed(() => store.getters[moviesSection]);
 
         const genres = computed(() => {
-            const genresArr = movies.map(movie => movie.genre.split(','));
+            const genresArr = movies.value.map(movie => movie.genre.split(','));
             return [...new Set(genresArr.flat().map(genre => genre.trim()))];
         });
         

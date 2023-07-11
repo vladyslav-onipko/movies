@@ -45,27 +45,29 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
-
 export default {
-  props: ['id', 'img', 'title', 'rating', 'rated', 'year', 'genres', 'runtime', 'description'],
+  props: [
+    'id', 
+    'img', 
+    'title', 
+    'rating', 
+    'rated', 
+    'year', 
+    'genres', 
+    'runtime', 
+    'description', 
+    'favorite', 
+    'moviesSection'
+    ],
   setup(props) {
     const store = useStore();
-    const movies = store.getters.movies;
-    const favoriteMovie = movies.find(movie => movie.id === props.id);
 
     const movieGenres = computed(() => props.genres.split(','));
     const movieYear = computed(() => parseInt(props.year));
-    const isFavorite = computed(() => favoriteMovie.favorite);
-
-    // Need to find more elegant way to write toggle favorite logic
+    const isFavorite = computed(() => props.favorite);
+    
     const toggleFavoriteMovie = () => {
-        if (isFavorite.value) {
-            favoriteMovie.favorite = !favoriteMovie.favorite;
-            store.commit('removeMovie', { from: 'favorites', id: props.id});
-        } else {
-            favoriteMovie.favorite = !favoriteMovie.favorite;
-            store.commit('addMovie', { to: 'favorites', movie: favoriteMovie });
-        }
+        store.dispatch('updateFavoriteMovie', { moviesSection: props.moviesSection, id: props.id });
     }
 
     return { movieGenres, movieYear, isFavorite, toggleFavoriteMovie };

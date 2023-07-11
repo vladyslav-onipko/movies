@@ -23,7 +23,8 @@ const moviesModule = {
     state() {
         return {
             movies: DUMMY_MOVIES,
-            favorites: [...DUMMY_MOVIES]
+            favorites: [...DUMMY_MOVIES],
+            filtered:[]
         }
     },
     mutations: {
@@ -65,7 +66,18 @@ const moviesModule = {
 
             console.log(movie);
             context.commit('checkFavoriteMovie', { movie });
-            context.commit('addMovie', { to: 'movies', movie });       
+            context.commit('addMovie', { to: 'movies', movie });   
+        },
+        updateFavoriteMovie(context, payload) {
+            const favoriteMovie = context.state[payload.moviesSection].find(movie => movie.id === payload.id);
+
+            if (favoriteMovie.favorite) {
+                favoriteMovie.favorite = !favoriteMovie.favorite;
+                context.commit('removeMovie', { from: 'favorites', id: payload.id});
+            } else {
+                favoriteMovie.favorite = !favoriteMovie.favorite;
+                context.commit('addMovie', { to: 'favorites', movie: favoriteMovie });
+            }
         }
     },
     getters: {
@@ -77,6 +89,9 @@ const moviesModule = {
         },
         favoritesLength(state) {
             return state.favorites.length;
+        },
+        filtered(state) {
+            return state.filtered;
         }
     }
 }

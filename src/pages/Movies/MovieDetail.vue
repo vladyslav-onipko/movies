@@ -9,12 +9,15 @@
         :genres="selectedMovie.genre"
         :runtime="selectedMovie.runtime"
         :description="selectedMovie.description"
+        :favorite="selectedMovie.favorite"
+        :moviesSection="previousPage"
     ></movie-detail>
 </template>
 
 <script>
 import { useStore } from 'vuex';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import MovieDetail from '../../components/Movies/MovieDetail.vue';
 
 export default {
@@ -24,12 +27,18 @@ export default {
     },
     setup(props) {
         const store = useStore();
+        const router = useRouter();
         const selectedMovie = ref(null);
-        const movies = store.getters.movies; // Need to fix bug with getting movie from movie array if movie does not exist
 
+        const previousPage = computed(() => {
+            const [lastPath] = router.options.history.state.back.split('/').slice(-1);
+            return lastPath ? lastPath : '/';
+        });
+
+        const movies = store.getters[previousPage.value];
         selectedMovie.value = movies.find(movie => movie.id === props.id);
         
-        return { selectedMovie };
+        return { selectedMovie, previousPage };
     }
 }
 </script>

@@ -8,6 +8,14 @@
     </div>
 </template>
 
+<script>
+export default {
+    setup() {
+        
+    }
+}
+</script>
+
 <style lang="scss" scoped>
 .sort-bar {
     $this: &;
