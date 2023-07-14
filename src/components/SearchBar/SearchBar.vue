@@ -17,7 +17,7 @@
             </transition>
             <template v-slot:actions>
                 <base-button type="submit" title="search">
-                    <base-icon prefix="fas" iconName="search"></base-icon>
+                    <base-icon prefix="fas" icon-name="search"></base-icon>
                 </base-button>
             </template>
         </base-form>

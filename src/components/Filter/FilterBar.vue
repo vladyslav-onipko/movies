@@ -1,5 +1,5 @@
 <template>
-    <div class="filter-bar">
+    <div class="movie-filter">
         <base-select id="filter" label="Filter" ref="selectFilter" :hiddenLabel="true" @changeSelect="changeHandler">
             <option value="">All</option>
             <option v-for="genre in genres" :value="genre" :key="genre">{{ genre }}</option>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.filter-bar {
+.movie-filter {
     padding: 0 10px;
     width: 25%;
 }

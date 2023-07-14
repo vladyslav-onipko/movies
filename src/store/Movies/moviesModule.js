@@ -6,6 +6,7 @@ const DUMMY_MOVIES = [
         description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
         genre: 'Crime, Comedy',
         favorite: false,
+        year: '2022'
     },
     {
         id: 'm2',
@@ -13,7 +14,8 @@ const DUMMY_MOVIES = [
         title: 'title 2',
         description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
         genre: 'Comedy',
-        favorite: false
+        favorite: false,
+        year: '2023'
     }
 ]
 

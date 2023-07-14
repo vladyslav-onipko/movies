@@ -1,4 +1,5 @@
 <template>
+    <tools-bar @movieSort="toggleSort"></tools-bar>
     <transition-group class="movies-list" tag="ul" name="movies-list" v-if="filteredMovies.length">
         <movie-item v-for="movie in filteredMovies" 
             :key="movie.id" 
@@ -17,22 +18,34 @@ import { useRoute } from 'vue-router';
 
 import MovieItem from './MovieItem.vue';
 import MoviePlaceholder from './MoviePlaceholder.vue';
+import ToolsBar from '../../components/Tools/ToolsBar.vue';
 
 export default {
     props: ['movies'],
     components: {
         MovieItem,
-        MoviePlaceholder
+        MoviePlaceholder,
+        ToolsBar
     },
     setup(props) {
         const route = useRoute();
         const queryGenre = computed(() => route.query.filter);
+        let sorted = false;
 
         const filteredMovies = computed(() => {
             return queryGenre.value ? props.movies.filter(movie => movie.genre.includes(queryGenre.value)) : props.movies;
         });
 
-        return { filteredMovies };
+        const toggleSort = () => {
+            if (sorted) {
+                filteredMovies.value.sort((a, b) => a.year < b.year ? -1 : 1);
+            } else {
+                filteredMovies.value.sort((a, b) => a.year > b.year ? -1 : 1);
+            }
+            sorted = !sorted;
+        };
+        
+        return { filteredMovies, toggleSort };
     }
 }
 </script>

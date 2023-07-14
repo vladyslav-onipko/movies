@@ -31,7 +31,11 @@ export default {
         const selectedMovie = ref(null);
 
         const previousPage = computed(() => {
-            const [lastPath] = router.options.history.state.back.split('/').slice(-1);
+            const [lastPath] = router.options.history.state.back
+            .split('?')[0]
+            .split('/')
+            .slice(-1); // getting last word from url
+            
             return lastPath ? lastPath : '/';
         });
 

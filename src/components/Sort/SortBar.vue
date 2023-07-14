@@ -1,23 +1,15 @@
 <template>
-    <div class="sort-bar">
-        <base-button class="sort-bar__toggle">
-            <base-icon class="sort-bar__toggle-icon" prefix="fas" iconName="arrow-up"></base-icon>
-            <base-icon class="sort-bar__toggle-icon" prefix="fas" iconName="arrow-down"></base-icon>
-            <span class="sort-bar__text">Sort</span>
+    <div class="movie-sort">
+        <base-button class="movie-sort__toggle" @click="$emit('sortHandler')">
+            <base-icon class="movie-sort__toggle-icon" prefix="fas" iconName="arrow-up"></base-icon>
+            <base-icon class="movie-sort__toggle-icon" prefix="fas" iconName="arrow-down"></base-icon>
+            <span class="movie-sort__text">Sort by year</span>
         </base-button>
     </div>
 </template>
 
-<script>
-export default {
-    setup() {
-        
-    }
-}
-</script>
-
 <style lang="scss" scoped>
-.sort-bar {
+.movie-sort {
     $this: &;
 
     color: $color-1--1;

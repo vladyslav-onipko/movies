@@ -1,6 +1,6 @@
 <template>
-    <div class="tools-bar">
-        <sortbar></sortbar>
+    <div class="movie-tools">
+        <sortbar @sortHandler="$.emit('movieSort')"></sortbar>
         <filter-bar></filter-bar>
     </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tools-bar {
+.movie-tools {
     display: flex;
     font-size: 1.2rem;
     justify-content: center;

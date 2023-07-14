@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="movie__actions is-bottom">
-                <base-button class="movie__action is-only-icon is-back" :link="true" to="/movies">
+                <base-button class="movie__action is-only-icon is-back" :link="true" :to="linkBack">
                     <base-icon class="movie__action-icon" prefix="fas" iconName="arrow-left"></base-icon>
                     <span class="movie__action-text">back</span>
                 </base-button>
@@ -44,6 +44,7 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default {
   props: [
@@ -61,16 +62,18 @@ export default {
     ],
   setup(props) {
     const store = useStore();
+    const router = useRouter();
 
     const movieGenres = computed(() => props.genres.split(','));
     const movieYear = computed(() => parseInt(props.year));
     const isFavorite = computed(() => props.favorite);
+    const linkBack = computed(() => router.options.history.state.back);
     
     const toggleFavoriteMovie = () => {
         store.dispatch('updateFavoriteMovie', { moviesSection: props.moviesSection, id: props.id });
     }
 
-    return { movieGenres, movieYear, isFavorite, toggleFavoriteMovie };
+    return { movieGenres, movieYear, isFavorite, linkBack, toggleFavoriteMovie };
   }
 }
 </script>
