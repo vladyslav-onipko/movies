@@ -16,8 +16,8 @@ export default {
     setup(props) {
         const store = useStore();
         const linkText = computed(() => props.text.toUpperCase());
-        const favoritesLength = computed(() => store.getters.favoritesLength);
-        const hasBadge = computed(() => props.badge && favoritesLength.value);
+        const favoritesLength = computed(() => store.getters.favoriteMovies.length);
+        const hasBadge = computed(() => props.badge && favoritesLength.value > 0);
         const activeBadgeClass = ref('');
 
         watch(favoritesLength, () => {

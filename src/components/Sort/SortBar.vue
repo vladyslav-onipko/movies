@@ -1,30 +1,51 @@
 <template>
-    <div class="movie-sort">
-        <base-button class="movie-sort__toggle" @click="$emit('sortHandler')">
-            <base-icon class="movie-sort__toggle-icon" prefix="fas" iconName="arrow-up"></base-icon>
-            <base-icon class="movie-sort__toggle-icon" prefix="fas" iconName="arrow-down"></base-icon>
-            <span class="movie-sort__text">Sort by year</span>
+    <div class="movies-sort">
+        <base-button class="movies-sort__toggle" @click="toggleSort">
+            <base-icon class="movies-sort__toggle-icon" prefix="fas" iconName="arrow-up"></base-icon>
+            <base-icon class="movies-sort__toggle-icon" prefix="fas" iconName="arrow-down"></base-icon>
+            <span class="movies-sort__text">Sort by year</span>
         </base-button>
     </div>
 </template>
 
-<style lang="scss" scoped>
-.movie-sort {
-    $this: &;
+<script>
+import { inject } from 'vue';
 
+export default {
+    setup() {
+        const movies = inject('movies');
+        
+        let sorted = false;
+        
+        const toggleSort = () => {
+            if (sorted) {
+                movies.sort((a, b) => a.year < b.year ? -1 : 1);
+            } else {
+                movies.sort((a, b) => a.year > b.year ? -1 : 1);
+            }
+            sorted = !sorted;
+        };
+
+        return { toggleSort };
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.movies-sort {
+    $this: &;
     color: $color-1--1;
-    padding: 0 10px;
-    width: 25%;
 
     &__toggle[class] {
         @include size(100%);
         align-items: center;
         border-radius: 4px;
-        color: $color-1--1;
+        color: inherit;
         display: flex;
-        font-size: 1.25rem;
+        font-size: inherit;
         justify-content: center;
         margin: 0;
+        min-height: 30px;
         padding: 0.25em 0.5em;
 
         @include hover() {

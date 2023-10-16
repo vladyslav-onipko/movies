@@ -1,5 +1,5 @@
 <template>
-    <div class="movie-filter">
+    <div class="movies-filter">
         <base-select id="filter" label="Filter" ref="selectFilter" :hiddenLabel="true" @changeSelect="changeHandler">
             <option value="">All</option>
             <option v-for="genre in genres" :value="genre" :key="genre">{{ genre }}</option>
@@ -9,8 +9,7 @@
 
 <script>
 import { useRouter, useRoute } from 'vue-router';
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { ref, computed, onMounted, inject } from 'vue';
 
 import BaseSelect from '../../ui/BaseSelect.vue';
 
@@ -21,15 +20,13 @@ export default {
     setup() {
         const router = useRouter();
         const route = useRoute();
-        const store = useStore();
 
         const selectFilter = ref(null);
-        const [moviesSection] = route.path.split('/').slice(-1);
-        const movies = computed(() => store.getters[moviesSection]);
+        const movies = inject('movies');
 
         const genres = computed(() => {
-            const genresArr = movies.value.map(movie => movie.genre.split(','));
-            return [...new Set(genresArr.flat().map(genre => genre.trim()))];
+            const genresArr = movies?.map(movie => movie.genre.split(','));
+            return [...new Set(genresArr?.flat()?.map(genre => genre.trim()))];
         });
         
         const changeHandler = (target) => {
@@ -45,10 +42,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.movie-filter {
-    padding: 0 10px;
-    width: 25%;
-}
-</style>

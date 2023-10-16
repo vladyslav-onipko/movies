@@ -16,7 +16,7 @@ export default {
     },
     setup() {
         const store = useStore();
-        const favoriteMovies = computed(() => store.getters.favorites);
+        const favoriteMovies = computed(() => store.getters.favoriteMovies);
 
         return { favoriteMovies };
     }

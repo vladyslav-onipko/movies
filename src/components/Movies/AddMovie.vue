@@ -6,10 +6,10 @@
         <h2 class="ghost">Search Bar</h2>
         <base-form :actions="true" @submit.prevent="submitForm">
             <base-input 
-                label="Search"
+                label="Add movie"
                 id="search" 
                 name="search" 
-                placeholder="Start serching film.."
+                placeholder="Start adding movie.."
                 v-model.trim="movieName"
             ></base-input>
             <transition name="fade" mode="out-in">
@@ -48,6 +48,7 @@ export default {
         const error = ref(null);
 
         const submitForm = async () => {
+            console.log(movieName.value);
             if (!movieName.value) {
                 inputIsValid.value = false;
                 return;
@@ -87,7 +88,7 @@ export default {
         display: flex;
 
         .error-message {
-            left: 80px;
+            left: 120px;
         }
     }
 
@@ -98,6 +99,7 @@ export default {
 
         label {
             color: $color-1--2;
+            flex-shrink: 0;
             font-size: 2.2rem;
             font-weight: 700;
             margin-right: 10px;

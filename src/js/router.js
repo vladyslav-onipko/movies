@@ -11,7 +11,7 @@ const router = createRouter({
         { path: '/', redirect: 'movies' },
         { path: '/movies', component: MoviesList },
         { path: '/movies/:id', component: MovieDetail, props: true },
-        { path: '/movies/favorites', component: MoviesFavorites },
+        { path: '/favorites', component: MoviesFavorites },
         {path: '/:notFound(.*)', component: NotFound}
     ],
     linkActiveClass: 'is-active',

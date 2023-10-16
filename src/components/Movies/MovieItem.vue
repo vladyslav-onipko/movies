@@ -10,8 +10,8 @@
                     <p class="movie-item__description">{{ description }}</p>
                 </div>
                 <div class="movie-item__actions">
-                    <base-button @click="removeMovie">Remove</base-button>
-                    <base-button :link="true" :to="detailLink" modifier="is-secondary">Details</base-button>
+                    <base-button @click="removeMovie">Not interesting</base-button>
+                    <base-button :link="true" :to="detailLink" modifier="is-secondary">See more</base-button>
                 </div>
             </div>
         </div>
@@ -21,18 +21,15 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
 
 export default {
     props: ['id', 'img', 'title', 'description'],
     setup(props) {
         const store = useStore();
-        const route = useRoute();
-        const detailLink = computed(() => '/movies' + '/' + props.id);
-        const [moviesSection] = route.path.split('/').slice(-1);
+        const detailLink = computed(() => 'movies' + '/' + props.id);
 
         const removeMovie = () => {
-            store.commit('removeMovie', { from: moviesSection, id: props.id });
+            store.dispatch('removeMovie', props.id);
         }
 
         return { detailLink, removeMovie };

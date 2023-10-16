@@ -5,7 +5,7 @@
     </div>
     <div class="site-wrapper__main">
       <main class="site-content" role="main">
-        <search-bar></search-bar>
+        <add-movie></add-movie>
         <router-view v-slot="{ Component, route }">
           <transition name="fade" mode="out-in">
             <component :is="Component" :key="route.path"></component>
@@ -18,13 +18,13 @@
 
 <script>
 import TheHeader from './layout/TheHeader.vue'
-import SearchBar from './components/SearchBar/SearchBar.vue';
+import AddMovie from './components/Movies/AddMovie.vue';
 
 export default {
   name: 'App',
   components: {
     TheHeader,
-    SearchBar,
+    AddMovie,
   }
 }
 </script>

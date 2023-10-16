@@ -2,29 +2,30 @@
   <teleport to="body">
     <div v-if="show" @click="hideModal" class="backdrop"></div>
     <transition name="modal">
-        <base-section v-if="show" class="modal" title="Modal" :hiddenTitle="true">
+        <div v-if="show" class="modal" title="Modal" :hiddenTitle="true">
             <div class="modal__title">
                 <slot name="title">
                     <p class="modal__title-text">{{ title }}</p>
                 </slot>
             </div>
-            <div class="modal__message">
+            <picture class="modal__picture">
+              <img src="../assets/img/opps.jpg" alt="Something went wrong">
+            </picture>
+            <div class="modal__message" v-if="message">
                 <slot></slot>
             </div>
             <div v-if="!fixed" class="modal__actions">
                 <slot name="actions">
-                    <base-button @click="hideModal">Close</base-button>
+                    <base-button @click="hideModal">Got it</base-button>
                 </slot>
             </div>
-        </base-section>
+        </div>
     </transition>
   </teleport>
 </template>
 
 <script>
-import BaseSection from './BaseSection.vue';
 export default {
-  components: { BaseSection },
   props: {
     show: {
       type: Boolean,
@@ -39,6 +40,11 @@ export default {
       required: false,
       default: false,
     },
+    message: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
   },
   emits: ['close'],
   setup(props, context) {
@@ -72,6 +78,7 @@ export default {
     overflow: hidden;
     position: fixed;
     padding: 0;
+    text-align: center;
     top: 20vh;
     width: 50%;
     z-index: 100;
@@ -87,6 +94,12 @@ export default {
     }
   }
 
+  &__picture {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+  }
+
   &__message {
     padding: 1rem;
   }
@@ -95,7 +108,7 @@ export default {
     display: flex;
     justify-content: flex-end;
     margin: 0;
-    padding: 1rem;
+    padding: 10px 20px 20px;
   }
 }
 

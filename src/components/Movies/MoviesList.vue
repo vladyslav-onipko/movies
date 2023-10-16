@@ -1,6 +1,6 @@
 <template>
-    <tools-bar @movieSort="toggleSort"></tools-bar>
-    <transition-group class="movies-list" tag="ul" name="movies-list" v-if="filteredMovies.length">
+    <tools-bar></tools-bar>
+    <transition-group class="movies-list" tag="ul" name="movies-list" v-if="hasMovies">
         <movie-item v-for="movie in filteredMovies" 
             :key="movie.id" 
             :id="movie.id" 
@@ -9,11 +9,11 @@
             :description="movie.description"
         ></movie-item>
     </transition-group>
-    <movie-placeholder text="Add your first movie" v-else></movie-placeholder>
+    <movie-placeholder text="No movies yet" v-else></movie-placeholder>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, provide } from 'vue';
 import { useRoute } from 'vue-router';
 
 import MovieItem from './MovieItem.vue';
@@ -30,22 +30,16 @@ export default {
     setup(props) {
         const route = useRoute();
         const queryGenre = computed(() => route.query.filter);
-        let sorted = false;
 
         const filteredMovies = computed(() => {
             return queryGenre.value ? props.movies.filter(movie => movie.genre.includes(queryGenre.value)) : props.movies;
         });
 
-        const toggleSort = () => {
-            if (sorted) {
-                filteredMovies.value.sort((a, b) => a.year < b.year ? -1 : 1);
-            } else {
-                filteredMovies.value.sort((a, b) => a.year > b.year ? -1 : 1);
-            }
-            sorted = !sorted;
-        };
+        const hasMovies = computed(() => filteredMovies.value && filteredMovies.value.length > 0);
+
+        provide('movies', filteredMovies.value); // need to fix select update
         
-        return { filteredMovies, toggleSort };
+        return { filteredMovies, hasMovies };
     }
 }
 </script>

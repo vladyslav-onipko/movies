@@ -1,6 +1,6 @@
 <template>
     <div class="movie-placeholder">
-        <base-icon prefix="fas" iconName="arrow-up"></base-icon>
+        <base-icon prefix="fas" iconName="face-sad-tear" class="movie-placeholder__icon"></base-icon>
         <p class="movie-placeholder__text">{{ text }}</p>
     </div>
 </template>
@@ -21,7 +21,12 @@ export default {
 
     &__text {
         color: $color-1--1;
+        font-size: 3rem;
         margin-top: 20px;
+    }
+
+    &__icon[class] {
+        @include size(50px, 50px);
     }
 }
 </style>

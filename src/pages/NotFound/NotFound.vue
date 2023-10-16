@@ -6,7 +6,7 @@
             </picture>
             <h2 class="page-error__title">404 - page not found</h2>
             <p class="page-error__text">The server could not locate the page you are looking for. This may be due to a broken link, outdated URL, or the page may have been removed or relocated.</p>
-            <base-button class="page-error__link is-secondary" :link="true" to="/movies">go to home</base-button>
+            <base-button class="page-error__link is-secondary" :link="true" to="/movies">Home</base-button>
         </div>
     </base-section>
 </template>

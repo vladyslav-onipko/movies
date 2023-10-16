@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 
-import moviesModule from './Movies/moviesModule.js';
+import moviesModule from './movies/moviesModule.js';
 
 const store = createStore({
     modules: {

@@ -43,8 +43,8 @@
 
 <script>
 import { computed } from 'vue';
-import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   props: [
@@ -57,20 +57,19 @@ export default {
     'genres', 
     'runtime', 
     'description', 
-    'favorite', 
-    'moviesSection'
+    'favorite'
     ],
   setup(props) {
-    const store = useStore();
     const router = useRouter();
+    const store = useStore();
 
     const movieGenres = computed(() => props.genres.split(','));
     const movieYear = computed(() => parseInt(props.year));
     const isFavorite = computed(() => props.favorite);
-    const linkBack = computed(() => router.options.history.state.back);
+    const linkBack = router.options.history.state.back;
     
     const toggleFavoriteMovie = () => {
-        store.dispatch('updateFavoriteMovie', { moviesSection: props.moviesSection, id: props.id });
+        store.dispatch('updateMovie', props.id);
     }
 
     return { movieGenres, movieYear, isFavorite, linkBack, toggleFavoriteMovie };

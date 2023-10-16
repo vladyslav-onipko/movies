@@ -5,7 +5,7 @@ const links = [
         hasBadge: false
     },
     {
-        href: '/movies/favorites',
+        href: '/favorites',
         text: 'Collection',
         hasBadge: true
     }

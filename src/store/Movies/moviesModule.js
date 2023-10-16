@@ -24,24 +24,15 @@ const MOVIE_API_KEY = '21081c5e';
 const moviesModule = {
     state() {
         return {
-            movies: DUMMY_MOVIES,
-            favorites: [...DUMMY_MOVIES],
-            filtered:[]
+            movies: DUMMY_MOVIES
         }
     },
     mutations: {
-        removeMovie(state, payload) {
-            state[payload.from] = state[payload.from].filter(movie => movie.id !== payload.id);
+        updateMovies(state, updatedMovies) {
+            state.movies = updatedMovies;
         },
-        addMovie(state, payload) {
-            state[payload.to].unshift(payload.movie);
-        },
-        checkFavoriteMovie(state, payload) {
-            const isFavAlready = state.favorites.find(movie => movie.title === payload.movie.title);
-            
-            if (isFavAlready) {
-                payload.movie.favorite = isFavAlready.favorite;
-            }
+        addMovie(state, movie) {
+            state.movies.unshift(movie);
         }
     },
     actions: {
@@ -67,33 +58,29 @@ const moviesModule = {
             };
 
             console.log(movie);
-            context.commit('checkFavoriteMovie', { movie });
-            context.commit('addMovie', { to: 'movies', movie });   
+            context.commit('addMovie', movie);
         },
-        updateFavoriteMovie(context, payload) {
-            const favoriteMovie = context.state[payload.moviesSection].find(movie => movie.id === payload.id);
-
-            if (favoriteMovie.favorite) {
-                favoriteMovie.favorite = !favoriteMovie.favorite;
-                context.commit('removeMovie', { from: 'favorites', id: payload.id});
-            } else {
-                favoriteMovie.favorite = !favoriteMovie.favorite;
-                context.commit('addMovie', { to: 'favorites', movie: favoriteMovie });
-            }
+        removeMovie(context, movieId) {
+            const filteredMovies = context.state.movies.filter(movie => movie.id !== movieId);
+            context.commit('updateMovies', filteredMovies);
+        },
+        updateMovie(context, movieId) {
+            const movie = context.state.movies.find(movie => movie.id === movieId);
+            movie.favorite = !movie.favorite;
         }
     },
     getters: {
         movies(state) {
             return state.movies;
         },
-        favorites(state) {
-            return state.favorites;
+        hasMovies(state) {
+            return state.movies && state.movie.length > 0;
         },
-        favoritesLength(state) {
-            return state.favorites.length;
+        favoriteMovies(state) {
+            return state.movies.filter(movie => movie.favorite);
         },
-        filtered(state) {
-            return state.filtered;
+        hasFavoriteMovies(_, getters) {
+            return getters.favoriteMovies && getters.favoriteMovies.length > 0;
         }
     }
 }
