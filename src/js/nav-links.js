@@ -6,7 +6,7 @@ const links = [
     },
     {
         href: '/favorites',
-        text: 'Collection',
+        text: 'Favorites',
         hasBadge: true
     }
 ];

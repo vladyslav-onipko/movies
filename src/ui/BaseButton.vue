@@ -1,5 +1,5 @@
 <template>
-    <button :type="btnType" class="btn" :class="modifier" v-if="!link">
+    <button :type="btnType" ref="toggle" class="btn" :class="modifier" v-if="!link">
         <slot></slot>
     </button>
     <router-link :to="to" class="btn" :class="modifier" v-else>
@@ -8,14 +8,15 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
     props: ['type', 'modifier', 'link', 'to'],
     setup(props) {
         const btnType = computed(() => props.type ? props.type : 'button');
+        const toggle = ref(null);
 
-        return { btnType }
+        return { btnType, toggle }
     }
 }
 </script>

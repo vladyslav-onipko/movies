@@ -6,7 +6,9 @@
                     class="movie__action is-only-icon is-favorite" 
                     :class="{ 'is-active': isFavorite }" 
                     title="favorite" 
-                    @click="toggleFavoriteMovie">
+                    @click="toggleFavoriteMovie"
+                    ref="toggle"
+                    >
                     <base-icon class="movie__action-icon" prefix="fas" iconName="heart"></base-icon>
                 </base-button>
             </div>
@@ -42,7 +44,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -66,13 +68,15 @@ export default {
     const movieGenres = computed(() => props.genres.split(','));
     const movieYear = computed(() => parseInt(props.year));
     const isFavorite = computed(() => props.favorite);
+    const toggle = ref(null);
     const linkBack = router.options.history.state.back;
     
     const toggleFavoriteMovie = () => {
-        store.dispatch('updateMovie', props.id);
+        store.dispatch('updateFavorite', props.id);
+        toggle.value.toggle.blur();
     }
 
-    return { movieGenres, movieYear, isFavorite, linkBack, toggleFavoriteMovie };
+    return { movieGenres, movieYear, isFavorite, linkBack, toggle, toggleFavoriteMovie };
   }
 }
 </script>

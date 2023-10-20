@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import { computed, provide } from 'vue';
+import { computed, provide, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 
 import MovieItem from './MovieItem.vue';
 import MoviePlaceholder from './MoviePlaceholder.vue';
@@ -29,15 +30,20 @@ export default {
     },
     setup(props) {
         const route = useRoute();
-        const queryGenre = computed(() => route.query.filter);
+        const store = useStore();
 
-        const filteredMovies = computed(() => {
-            return queryGenre.value ? props.movies.filter(movie => movie.genre.includes(queryGenre.value)) : props.movies;
+        const filterQuery = computed(() => route.query.filter);
+        const movies = computed(() => props.movies);
+        const filteredMovies = computed(() => store.getters.filteredMovies);
+        const hasMovies = computed(() => store.getters.hasMovies);
+        
+        store.dispatch('filterMovies', { ganre: filterQuery.value, movies: movies.value });
+
+        watch(movies, () => {
+            store.dispatch('filterMovies', { ganre: filterQuery.value, movies: movies.value });
         });
 
-        const hasMovies = computed(() => filteredMovies.value && filteredMovies.value.length > 0);
-
-        provide('movies', filteredMovies.value); // need to fix select update
+        provide('selectedMovies', movies);
         
         return { filteredMovies, hasMovies };
     }
@@ -48,7 +54,6 @@ export default {
 .movies-list {
     list-style: none;
     margin: 0;
-    padding: 20px;
 }
 
 .movies-list-enter-active {

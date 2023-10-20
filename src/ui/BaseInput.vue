@@ -7,24 +7,26 @@
             :placeholder="placeholder" 
             :value="modelValue" 
             @input="updateValue"
+            ref="input"
         >
     </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
     props: ['id', 'type', 'label', 'placeholder', 'modelValue', 'hiddenLabel'],
     emits: ['update:modelValue'],
     setup(props, context) {
+        const input = ref(null);
         const inputType = computed(() => props.type ? props.type : 'text');
 
         const updateValue = (e) => {
             context.emit('update:modelValue', e.target.value);
         }
 
-        return { inputType, updateValue };
+        return { inputType, updateValue, input };
     }
 }
 </script>

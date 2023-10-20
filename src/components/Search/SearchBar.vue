@@ -3,16 +3,19 @@
         <base-input
             :hiddenLabel="true"
             label="Search movie"
-            id="search-movie" 
-            name="search-movie" 
+            id="search" 
+            name="search" 
             placeholder="Search.."
-            v-model.trim="movieName"
+            v-model.trim="searchTerm"
+            ref="searchInput"
         ></base-input>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch, inject } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 import BaseInput from '../../ui/BaseInput.vue';
 
@@ -21,9 +24,19 @@ export default {
         BaseInput
     },
     setup() {
-        const movieName = ref('');
-        
-        return { movieName };
+        const store = useStore();
+        const router = useRouter();
+
+        const searchTerm = ref('');
+        const searchInput = ref(null);
+        const movies = inject('selectedMovies');
+
+        watch(searchTerm, (term) => {
+            store.dispatch('searchMovies', { searchTerm: term, movies: movies.value });
+            router.replace({ query: {} });
+        });
+
+        return { searchTerm, searchInput };
     }
 }
 </script>

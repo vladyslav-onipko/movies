@@ -6,9 +6,9 @@
         <h2 class="ghost">Search Bar</h2>
         <base-form :actions="true" @submit.prevent="submitForm">
             <base-input 
-                label="Add movie"
-                id="search" 
-                name="search" 
+                label="Movie"
+                id="add" 
+                name="add" 
                 placeholder="Start adding movie.."
                 v-model.trim="movieName"
             ></base-input>
@@ -17,7 +17,7 @@
             </transition>
             <template v-slot:actions>
                 <base-button type="submit" title="search">
-                    <base-icon prefix="fas" icon-name="search"></base-icon>
+                    <base-icon prefix="fas" icon-name="plus"></base-icon>
                 </base-button>
             </template>
         </base-form>
@@ -48,7 +48,6 @@ export default {
         const error = ref(null);
 
         const submitForm = async () => {
-            console.log(movieName.value);
             if (!movieName.value) {
                 inputIsValid.value = false;
                 return;
@@ -88,7 +87,7 @@ export default {
         display: flex;
 
         .error-message {
-            left: 120px;
+            left: 75px;
         }
     }
 

@@ -33,9 +33,7 @@ export default {
     display: flex;
     font-size: 1.2rem;
     justify-content: center;
-    margin: 20px auto 0;
-    padding: 5px;
-    width: 80%;
+    margin: 0 -10px 20px;
 
     &__list {
         align-items: center;
@@ -47,7 +45,11 @@ export default {
 
         &-item {
             padding: 0 10px;
-            width: calc(100% / 3);
+            width: calc(100% / 4);
+
+            &:first-child {
+                margin-right: auto;
+            }
         }
     }
 }

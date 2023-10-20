@@ -24,12 +24,16 @@ const MOVIE_API_KEY = '21081c5e';
 const moviesModule = {
     state() {
         return {
-            movies: DUMMY_MOVIES
+            movies: DUMMY_MOVIES,
+            filteredMovies: []
         }
     },
     mutations: {
         updateMovies(state, updatedMovies) {
             state.movies = updatedMovies;
+        },
+        updateFilteredMovies(state, updatedMovies) {
+            state.filteredMovies = updatedMovies;
         },
         addMovie(state, movie) {
             state.movies.unshift(movie);
@@ -61,20 +65,35 @@ const moviesModule = {
             context.commit('addMovie', movie);
         },
         removeMovie(context, movieId) {
-            const filteredMovies = context.state.movies.filter(movie => movie.id !== movieId);
-            context.commit('updateMovies', filteredMovies);
+            const movies = context.state.movies.filter(movie => movie.id !== movieId);
+            context.commit('updateMovies', movies);
         },
-        updateMovie(context, movieId) {
+        updateFavorite(context, movieId) {
             const movie = context.state.movies.find(movie => movie.id === movieId);
             movie.favorite = !movie.favorite;
+        },
+        filterMovies(context, payload) {
+            const filteredMovies = payload.ganre ? 
+                payload.movies.filter(movie => movie.genre.includes(payload.ganre)) : 
+                payload.movies;
+            context.commit('updateFilteredMovies', filteredMovies);
+        },
+        searchMovies(context, payload) {
+            const filteredMovies = payload.searchTerm ? 
+                payload.movies.filter(movie => movie.title.toLowerCase().includes(payload.searchTerm.toLowerCase())) : 
+                payload.movies;
+            context.commit('updateFilteredMovies', filteredMovies);
         }
     },
     getters: {
         movies(state) {
             return state.movies;
         },
-        hasMovies(state) {
-            return state.movies && state.movie.length > 0;
+        filteredMovies(state) {
+            return state.filteredMovies;
+        },
+        hasMovies(_, getters) {
+            return getters.movies && getters.movies.length > 0;
         },
         favoriteMovies(state) {
             return state.movies.filter(movie => movie.favorite);

@@ -17,6 +17,7 @@ export default {
     box-shadow: 0 0 15px 0 rgba($color-1--2,.75);
     border-radius: 4px;
     margin: 50px 0;
+    padding: 20px;
     overflow: hidden;
 }
 </style>

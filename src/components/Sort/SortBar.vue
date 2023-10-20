@@ -9,19 +9,22 @@
 </template>
 
 <script>
-import { inject } from 'vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     setup() {
-        const movies = inject('movies');
+        const store = useStore();
+        
+        const movies = computed(() => store.getters.filteredMovies);
         
         let sorted = false;
         
         const toggleSort = () => {
             if (sorted) {
-                movies.sort((a, b) => a.year < b.year ? -1 : 1);
+                movies.value.sort((a, b) => a.year < b.year ? -1 : 1);
             } else {
-                movies.sort((a, b) => a.year > b.year ? -1 : 1);
+                movies.value.sort((a, b) => a.year > b.year ? -1 : 1);
             }
             sorted = !sorted;
         };

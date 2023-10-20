@@ -1,6 +1,6 @@
 <template>
     <label :for="id" :class="!hiddenLabel || 'ghost'">{{ label }}</label>
-    <select :name="id" :id="id" ref="selectTarget" :value="modelValue" @input="updateValue" @change="changeValue">
+    <select :name="id" :id="id" ref="select" :value="modelValue" @input="updateValue" @change="changeValue">
         <slot></slot>
     </select>
 </template>
@@ -12,7 +12,7 @@ export default {
     props: ['id', 'label', 'modelValue', 'hiddenLabel'],
     emits: ['update:modelValue', 'change-select'],
     setup(_, context) {
-        const selectTarget = ref(null);
+        const select = ref(null);
 
         const updateValue = (e) => {
             context.emit('update:modelValue', e.target.value);
@@ -22,7 +22,7 @@ export default {
             context.emit('change-select', e.target);
         }
 
-        return { updateValue, changeValue, selectTarget };
+        return { updateValue, changeValue, select };
     }
 }
 </script>
