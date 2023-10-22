@@ -30,10 +30,11 @@ export default {
         const searchTerm = ref('');
         const searchInput = ref(null);
         const movies = inject('selectedMovies');
+        const allMoviesOption = store.getters.allMoviesOption;
 
         watch(searchTerm, (term) => {
             store.dispatch('searchMovies', { searchTerm: term, movies: movies.value });
-            router.replace({ query: {} });
+            router.replace({ query: { filter: allMoviesOption } });
         });
 
         return { searchTerm, searchInput };

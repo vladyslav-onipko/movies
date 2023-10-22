@@ -25,7 +25,8 @@ const moviesModule = {
     state() {
         return {
             movies: DUMMY_MOVIES,
-            filteredMovies: []
+            filteredMovies: [],
+            allMoviesOption: 'All'
         }
     },
     mutations: {
@@ -73,9 +74,13 @@ const moviesModule = {
             movie.favorite = !movie.favorite;
         },
         filterMovies(context, payload) {
-            const filteredMovies = payload.ganre ? 
-                payload.movies.filter(movie => movie.genre.includes(payload.ganre)) : 
-                payload.movies;
+            let filteredMovies = [];
+            
+            if (payload.genre && payload.genre !== context.state.allMoviesOption) {
+                filteredMovies = payload.movies.filter(movie => movie.genre.includes(payload.genre))
+            } else {
+                filteredMovies = payload.movies;
+            }
             context.commit('updateFilteredMovies', filteredMovies);
         },
         searchMovies(context, payload) {
@@ -92,14 +97,17 @@ const moviesModule = {
         filteredMovies(state) {
             return state.filteredMovies;
         },
-        hasMovies(_, getters) {
-            return getters.movies && getters.movies.length > 0;
+        hasMovies(store) {
+            return store.filteredMovies && store.filteredMovies.length > 0;
         },
         favoriteMovies(state) {
             return state.movies.filter(movie => movie.favorite);
         },
         hasFavoriteMovies(_, getters) {
             return getters.favoriteMovies && getters.favoriteMovies.length > 0;
+        },
+        allMoviesOption(state) {
+            return state.allMoviesOption;
         }
     }
 }

@@ -37,10 +37,10 @@ export default {
         const filteredMovies = computed(() => store.getters.filteredMovies);
         const hasMovies = computed(() => store.getters.hasMovies);
         
-        store.dispatch('filterMovies', { ganre: filterQuery.value, movies: movies.value });
+        store.dispatch('filterMovies', { genre: filterQuery.value, movies: movies.value });
 
         watch(movies, () => {
-            store.dispatch('filterMovies', { ganre: filterQuery.value, movies: movies.value });
+            store.dispatch('filterMovies', { genre: filterQuery.value, movies: movies.value });
         });
 
         provide('selectedMovies', movies);
