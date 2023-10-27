@@ -1,5 +1,5 @@
 <template>
-    <form class="form">
+    <form class="form" novalidate>
         <slot></slot>
         <div class="form-actions" v-if="actions">
             <slot name="actions"></slot>

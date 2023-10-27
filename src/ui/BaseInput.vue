@@ -1,9 +1,10 @@
 <template>
     <div class="form-control">
         <label :for="id" :class="!hiddenLabel || 'ghost'">{{ label }}</label>
-        <input 
+        <input
             :type="inputType" 
-            :id="id" :name="id" 
+            :id="id"
+            :name="id"
             :placeholder="placeholder" 
             :value="modelValue" 
             @input="updateValue"
@@ -33,18 +34,21 @@ export default {
 
 <style lang="scss" scoped>
 .form-control {
+    margin-bottom: 20px;
+    
     label {
-        color: $color-gray;
+        color: $color-1--1;
         cursor: pointer;
         display: block;
         font-size: 1.8rem;
+        margin-bottom: 5px;
     }
 
     input {
         background-color: $color-white;
-        border: 1px solid $color-gray;
+        border: 1px solid $color-1--2;
         border-radius: 4px;
-        color: $color-gray;
+        color: $color-1--1;
         font-size: 1.6rem;
         margin: 0;
         min-height: 30px;
@@ -53,6 +57,7 @@ export default {
         width: 100%;
 
         &::placeholder {
+            color: $color-1--1;
             font-style: italic;
             font-size: 1.4rem;
         }

@@ -7,20 +7,20 @@
            <nav-list></nav-list>
         </div>
         <div class="header__login">
-            <header-login></header-login>
+            <header-auth></header-auth>
         </div>
     </header>
 </template>
 
 <script>
 import HeaderLogo from '../components/Logo/HeaderLogo.vue';
-import HeaderLogin from '../components/Login/HeaderLogin.vue';
+import HeaderAuth from '../components/Authentication/HeaderAuth.vue';
 import NavList from '../components/Navigation/NavList.vue';
 
 export default {
     components: {
         HeaderLogo,
-        HeaderLogin,
+        HeaderAuth,
         NavList,
     }
 }

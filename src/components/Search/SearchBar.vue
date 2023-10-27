@@ -45,8 +45,9 @@ export default {
 <style lang="scss">
 .movies-search {
     .form-control {
+        margin-bottom: 0;
+        
         input {
-            border: 1px solid $color-1--2;
             color: inherit;
             font-size: inherit;
             padding: 0.25em 0.5em;

@@ -5,7 +5,6 @@
     </div>
     <div class="site-wrapper__main">
       <main class="site-content" role="main">
-        <add-movie></add-movie>
         <router-view v-slot="{ Component, route }">
           <transition name="fade" mode="out-in">
             <component :is="Component" :key="route.path"></component>
@@ -18,13 +17,18 @@
 
 <script>
 import TheHeader from './layout/TheHeader.vue'
-import AddMovie from './components/Movies/AddMovie.vue';
+
+import { useStore } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    TheHeader,
-    AddMovie,
+    TheHeader
+  },
+  setup() {
+    const store = useStore();
+
+    store.dispatch('autoLogin');
   }
 }
 </script>

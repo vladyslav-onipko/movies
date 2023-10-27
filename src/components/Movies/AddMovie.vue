@@ -2,13 +2,11 @@
     <base-modal :show="!!error" title="An error ocuured!" @close="handleError">
         <p>{{ error }}</p>
     </base-modal>
-    <section class="search-bar">
-        <h2 class="ghost">Search Bar</h2>
+    <div class="search-bar">
         <base-form :actions="true" @submit.prevent="submitForm">
             <base-input 
                 label="Movie"
                 id="add" 
-                name="add" 
                 placeholder="Start adding movie.."
                 v-model.trim="movieName"
             ></base-input>
@@ -21,7 +19,7 @@
                 </base-button>
             </template>
         </base-form>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -80,7 +78,7 @@ export default {
 
 <style lang="scss">
 .search-bar {
-    margin: 50px 0;
+    margin-bottom:  50px;
 
     .form {
         align-items: center;
@@ -95,13 +93,14 @@ export default {
         align-items: center;
         display: flex;
         flex-grow: 1;
+        margin-bottom: 0;
 
         label {
             color: $color-1--2;
             flex-shrink: 0;
             font-size: 2.2rem;
             font-weight: 700;
-            margin-right: 10px;
+            margin: 0 10px 0 0;
         }
 
         input {
