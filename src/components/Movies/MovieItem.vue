@@ -28,8 +28,12 @@ export default {
         const store = useStore();
         const detailLink = computed(() => 'movies' + '/' + props.id);
 
-        const removeMovie = () => {
-            store.dispatch('removeMovie', props.id);
+        const removeMovie = async () => {
+            try {
+                store.dispatch('removeMovie', props.id);
+            } catch (e) {
+                console.log(e);
+            }
         }
 
         return { detailLink, removeMovie };

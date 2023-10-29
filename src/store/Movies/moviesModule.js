@@ -1,30 +1,9 @@
-const DUMMY_MOVIES = [
-    {
-        id: 'm1',
-        img: 'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg',
-        title: 'title',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
-        genre: 'Crime, Comedy',
-        favorite: false,
-        year: '2022'
-    },
-    {
-        id: 'm2',
-        img: 'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg',
-        title: 'title 2',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem dolore magnam aliquam quaerat voluptatem',
-        genre: 'Comedy',
-        favorite: false,
-        year: '2023'
-    }
-]
-
 const MOVIE_API_KEY = '21081c5e';
 
 const moviesModule = {
     state() {
         return {
-            movies: DUMMY_MOVIES,
+            movies: [],
             filteredMovies: [],
             allMoviesOption: 'All'
         }
@@ -41,16 +20,17 @@ const moviesModule = {
         }
     },
     actions: {
-        async saveMovie(context, movieName) {
+        async addMovie(context, movieName) {
             const response = await fetch(`http://www.omdbapi.com/?t=${movieName}&apikey=${MOVIE_API_KEY}`);
             const data = await response.json();
 
             if (data.Response === 'False') {
                 throw new Error(data.Error || 'Faild to fetch!');
             }
+            
+            context.dispatch('checkExistingMovie', data.Title);
 
             const movie = {
-                id: 'm4',
                 img: data.Poster,
                 title: data.Title,
                 description: data.Plot,
@@ -62,16 +42,79 @@ const moviesModule = {
                 favorite: false
             };
 
-            console.log(movie);
+            await context.dispatch('saveMovie', { movie });
+        },
+        async saveMovie(context, payload) {
+            const userId = context.rootGetters.userId;
+            const response = await fetch(`https://movie-holder-default-rtdb.firebaseio.com/users/${userId}/movies.json`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload.movie)
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
+                throw new Error(errorMessage || 'Failed to save movie.');
+            }
+
+            const movie = {
+                ...payload.movie,
+                id: data.name
+            };
+
             context.commit('addMovie', movie);
         },
-        removeMovie(context, movieId) {
+        async loadMovies(context) {
+            const userId = context.rootGetters.userId;
+            const response = await fetch(`https://movie-holder-default-rtdb.firebaseio.com/users/${userId}/movies.json`);
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
+                throw new Error(errorMessage || 'Failed to load movies.');
+            }
+
+            const movies = [];
+
+            for (const movie in data) {
+                movies.push({...data[movie], id: movie});
+            }
+
+            context.commit('updateMovies', movies);
+        },
+        async removeMovie(context, movieId) {
+            const userId = context.rootGetters.userId;
+            const response = await fetch(`https://movie-holder-default-rtdb.firebaseio.com/users/${userId}/movies/${movieId}.json`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
+                throw new Error(errorMessage || 'Failed to remove movies.');
+            }
+
             const movies = context.state.movies.filter(movie => movie.id !== movieId);
             context.commit('updateMovies', movies);
         },
-        updateFavorite(context, movieId) {
+        async updateFavorite(context, movieId) {
+            const userId = context.rootGetters.userId;
             const movie = context.state.movies.find(movie => movie.id === movieId);
+
             movie.favorite = !movie.favorite;
+            
+            const response = await fetch(`https://movie-holder-default-rtdb.firebaseio.com/users/${userId}/movies/${movieId}.json`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(movie)
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
+                throw new Error(errorMessage || 'Failed to remove movies.');
+            }
         },
         filterMovies(context, payload) {
             let filteredMovies = [];
@@ -81,6 +124,7 @@ const moviesModule = {
             } else {
                 filteredMovies = payload.movies;
             }
+
             context.commit('updateFilteredMovies', filteredMovies);
         },
         searchMovies(context, payload) {
@@ -88,6 +132,13 @@ const moviesModule = {
                 payload.movies.filter(movie => movie.title.toLowerCase().includes(payload.searchTerm.toLowerCase())) : 
                 payload.movies;
             context.commit('updateFilteredMovies', filteredMovies);
+        },
+        checkExistingMovie(context, name) {
+            context.state.movies.forEach(movie => {
+                if (movie.title.includes(name)) {
+                    throw new Error('Movie already exist! Please try another.');
+                }
+            });
         }
     },
     getters: {

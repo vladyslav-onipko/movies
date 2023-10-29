@@ -11,7 +11,6 @@ const authModule = {
         setUser(state, payload) {
             state.userId = payload.userId;
             state.token = payload.token;
-            state.tokenExpiration = payload.tokenExpiration;
         }
     },
     actions: {
@@ -22,6 +21,7 @@ const authModule = {
 
             const response = await fetch(url, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     email: payload.email,
                     password: payload.password,
@@ -37,16 +37,15 @@ const authModule = {
             }
 
             const userData = {
-                useId: data.localId,
+                userId: data.localId,
                 token: data.idToken
             };
 
-            // const tokenExpiresIn = 5000; // test logout time
             const tokenExpiresIn = Number(data.expiresIn) * 1000; // convert seconds to ms
             const tokenExpirationDate = new Date().getTime() + tokenExpiresIn; // expires time in future
 
             localStorage.setItem('token', userData.token);
-            localStorage.setItem('userId', userData.useId);
+            localStorage.setItem('userId', userData.userId);
             localStorage.setItem('tokenExpiration', tokenExpirationDate);
 
             tokenTimer = setTimeout(() => {
@@ -89,6 +88,8 @@ const authModule = {
             localStorage.removeItem('tokenExpiration');
 
             clearTimeout(tokenTimer);
+
+            context.commit('updateMovies', []);
 
             context.commit('setUser', {
                 userId: null,

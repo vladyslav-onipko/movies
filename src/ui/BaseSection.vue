@@ -18,6 +18,7 @@ export default {
     border-radius: 4px;
     margin: 50px 0;
     padding: 20px;
+    position: relative;
     overflow: hidden;
 }
 </style>

@@ -34,8 +34,6 @@ import BaseForm from '../../ui/BaseForm.vue';
 import BaseInput from '../../ui/BaseInput.vue';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.vue';
 
-import rootStore from '../../store/index.js';
-
 import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -71,6 +69,7 @@ export default {
 
             try {
                 await store.dispatch('login', userData);
+                await store.dispatch('loadMovies');
                 router.replace('/movies');
             } catch (e) {
                 error.value = e.message || 'Something went wrong';
@@ -83,15 +82,6 @@ export default {
             error.value = null;
         };
 
-        // onBeforeRouteLeave((_, _2, next) => {
-        //     if (emailInput.value || passwordInput.value && !isAuth.value) {
-        //         const leave = confirm('Some information is not saved. Leave this page?');
-        //         next(leave);
-        //     } else {
-        //         next();
-        //     }
-        // });
-
         watch([emailInput, passwordInput], ([emailValue, passwordValue]) => {
             if (emailValue.length || passwordValue.length) {
                 formIsValid.value = true;
@@ -99,13 +89,6 @@ export default {
         });
 
         return { emailInput, passwordInput, submitForm , formIsValid, isLoading, error, handleError };
-    },
-    beforeRouteEnter(_, _2, next) {
-        if (rootStore.getters.isAuthenticated) {
-            next('/movies');
-        } else {
-            next();
-        }
     }
 }
 </script>

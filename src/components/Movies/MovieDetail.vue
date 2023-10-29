@@ -71,9 +71,13 @@ export default {
     const toggle = ref(null);
     const linkBack = router.options.history.state.back;
     
-    const toggleFavoriteMovie = () => {
-        store.dispatch('updateFavorite', props.id);
-        toggle.value.toggle.blur();
+    const toggleFavoriteMovie = async () => {
+        try {
+            store.dispatch('updateFavorite', props.id);
+            toggle.value.toggle.blur();
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     return { movieGenres, movieYear, isFavorite, linkBack, toggle, toggleFavoriteMovie };

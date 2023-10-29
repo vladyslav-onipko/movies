@@ -1,5 +1,5 @@
 <template>
-    <base-section class="movies-favorites" title="Movies" :hiddenTitle="true">
+    <base-section class="movies" title="Movies" :hiddenTitle="true">
         <add-movie></add-movie>
         <movies-list :movies="favoriteMovies"></movies-list>
     </base-section>

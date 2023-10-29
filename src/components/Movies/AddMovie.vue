@@ -3,6 +3,7 @@
         <p>{{ error }}</p>
     </base-modal>
     <div class="search-bar">
+        <base-spinner v-if="isLoading"></base-spinner>
         <base-form :actions="true" @submit.prevent="submitForm">
             <base-input 
                 label="Movie"
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -44,6 +45,8 @@ export default {
         const movieName = ref(null);
         const inputIsValid = ref(true);
         const error = ref(null);
+        const isLoading = ref(false);
+        const isAuth = computed(() => store.getters.isAuthenticated);
 
         const submitForm = async () => {
             if (!movieName.value) {
@@ -51,14 +54,21 @@ export default {
                 return;
             }
 
+            isLoading.value = true;
+
+            if (!isAuth.value) {
+                router.push('login');
+            }
+
             try {
-                await store.dispatch('saveMovie', movieName.value);
+                await store.dispatch('addMovie', movieName.value);
+                movieName.value = '';
+                router.push('/movies');
             } catch (e) {
                 error.value = e.message || 'Something went wrong';
             }
-            
-            router.push('/movies');
-            movieName.value = '';
+
+            isLoading.value = false;
         };
 
         const handleError = () => {
@@ -71,7 +81,7 @@ export default {
             }
         });
 
-        return { movieName, submitForm, inputIsValid, error, handleError }
+        return { movieName, submitForm, inputIsValid, error, handleError, isLoading }
     }
 }
 </script>
@@ -79,6 +89,7 @@ export default {
 <style lang="scss">
 .search-bar {
     margin-bottom:  50px;
+    position: relative;
 
     .form {
         align-items: center;
