@@ -32,6 +32,7 @@ export default {
     font-size: 1.8rem;
     margin: 0 10px;
     padding: 10px 25px;
+    text-align: center;
     text-decoration: none;
 
     &.is-secondary {

@@ -1,8 +1,8 @@
 <template>
   <teleport to="body">
-    <div v-if="show" @click="hideModal" class="backdrop"></div>
+    <div v-if="show" @click="hideModal" class="backdrop" :aria-expanded="show"></div>
     <transition name="modal">
-        <div v-if="show" class="modal" title="Modal" :hiddenTitle="true">
+        <div v-if="show" class="modal" title="Modal" :hiddenTitle="true" aria-modal="true" role="dialog">
             <div class="modal__title">
                 <slot name="title">
                     <p class="modal__title-text">{{ title }}</p>
@@ -83,6 +83,16 @@ export default {
     width: 50%;
     z-index: 100;
 
+    @include media-max(1279) {
+      left: 20%;
+      width: 60%;
+    }
+
+    @include media-max(767) {
+      left: 5%;
+      width: 90%;
+    }
+
   &__title {
         background-color: $color-1--2;
         padding: 1rem;
@@ -91,6 +101,10 @@ export default {
         color: $color-2--2;
         font-size: 4rem;
         margin: 0;
+
+        @include media-max(767) {
+          font-size: 3rem;
+        }
     }
   }
 
@@ -98,6 +112,10 @@ export default {
     display: block;
     margin: 0 auto;
     width: 50%;
+
+    @include media-max(479) {
+      width: 100%;
+    }
   }
 
   &__message {
@@ -109,6 +127,10 @@ export default {
     justify-content: flex-end;
     margin: 0;
     padding: 10px 20px 20px;
+
+    @include media-max(1279) {
+      justify-content: center;
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <router-link class="logo" to="/">
+    <router-link class="logo" to="movies">
         <span class="logo__image">
             <svg fill="#000000" height="800px" width="800px" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 210.233 210.233" xml:space="preserve">
                 <g>

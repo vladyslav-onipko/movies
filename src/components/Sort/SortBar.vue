@@ -15,7 +15,6 @@ import { useStore } from 'vuex';
 export default {
     setup() {
         const store = useStore();
-        
         const movies = computed(() => store.getters.filteredMovies);
         
         let sorted = false;
@@ -64,6 +63,10 @@ export default {
 
     &__text {
         margin-left: 5px;
+
+        @include media-max(479) {
+            display: none;
+        }
     }
 }
 </style>

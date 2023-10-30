@@ -1,25 +1,27 @@
 <template>
     <div class="login">
-        <base-button v-if="!isAuth" modifier="is-tertiary is-login" link="true" to="/login">Login</base-button>
-        <base-button v-if="!isAuth" modifier="is-secondary is-singup" link="true" to="/singup">Sign up</base-button>
+        <base-button v-if="!isAuth" modifier="is-tertiary is-login" link="true" to="/login" @click="toggleNav">Login</base-button>
+        <base-button v-if="!isAuth" modifier="is-secondary is-singup" link="true" to="/singup" @click="toggleNav">Sign up</base-button>
         <base-button v-if="isAuth" modifier="is-secondary" @click="logout">Logout</base-button>
     </div>
 </template>
 
 <script>
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 export default {
     setup() {
         const store = useStore();
         const isAuth = computed(() => store.getters.isAuthenticated);
+        const toggleNav = inject('toggleNav');
         
         const logout = () => {
             store.dispatch('logout');
+            toggleNav();
         };
 
-        return { isAuth, logout };
+        return { isAuth, logout, toggleNav };
     }
 }
 </script>
@@ -30,7 +32,15 @@ export default {
     display: flex;
     height: 100%;
 
+    @include media-max(767) {
+        justify-content: center;
+        height: auto;
+    }
+
     .btn {
+        @include media-max(767) {
+            min-width: 100px;
+        }
         &.is-singup {
             @include hover() {
                 background-color: $color-2--2;

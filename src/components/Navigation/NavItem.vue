@@ -1,6 +1,6 @@
 <template>
     <li class="nav__item">
-        <router-link :to="to" class="nav__link">
+        <router-link :to="to" class="nav__link" @click="toggleNav">
             {{ linkText }}
             <span class="nav__link-badge" :class="activeBadgeClass" v-if="hasBadge">{{ favoritesLength }}</span>
         </router-link>
@@ -8,17 +8,19 @@
 </template>
 
 <script>
-import { computed, watch, ref } from 'vue';
+import { computed, watch, ref, inject } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
     props: ['to', 'text', 'badge'],
     setup(props) {
         const store = useStore();
+        
         const linkText = computed(() => props.text.toUpperCase());
         const favoritesLength = computed(() => store.getters.favoriteMovies.length);
         const hasBadge = computed(() => props.badge && favoritesLength.value > 0);
         const activeBadgeClass = ref('');
+        const toggleNav = inject('toggleNav');
 
         watch(favoritesLength, () => {
             activeBadgeClass.value = 'is-active';
@@ -28,7 +30,7 @@ export default {
             }, 300)
         });
         
-        return { linkText, favoritesLength, hasBadge, activeBadgeClass }
+        return { linkText, favoritesLength, hasBadge, activeBadgeClass, toggleNav }
     }
 }
 </script>

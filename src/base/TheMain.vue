@@ -62,23 +62,22 @@
   @import '../scss/animations';
   
   .site-wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      min-height: 100vh;
-      overflow-x: hidden;
-      width: 100%;
-  
-      &__main {
-        height: 100%;
-      }
+    @include size(100%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    &__main {
+      height: 100%;
+    }
   }
   
   .site-content {
-      margin: 0 auto;
-      max-width: 768px;
-      padding: 0 20px;
-      position: relative;
+    margin: 0 auto;
+    max-width: 768px;
+    padding: 0 20px;
+    position: relative;
   }
   </style>
   

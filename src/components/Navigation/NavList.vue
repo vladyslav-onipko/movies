@@ -33,6 +33,10 @@ export default {
 .nav {
     height: 100%;
 
+    @include media-max(767) {
+        margin: 25px 0 50px;
+    }
+
     &__list {
         align-items: center;
         display: flex;
@@ -40,6 +44,11 @@ export default {
         list-style: none;
         margin: 0;
         padding: 0;
+
+        @include media-max(767) {
+            justify-content: center;
+            height: 80px;
+        }
     }
 }
 </style>

@@ -92,7 +92,7 @@ const moviesModule = {
 
             if (!response.ok) {
                 const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
-                throw new Error(errorMessage || 'Failed to remove movies.');
+                throw new Error(errorMessage || 'Failed to remove movie.');
             }
 
             const movies = context.state.movies.filter(movie => movie.id !== movieId);
@@ -103,7 +103,7 @@ const moviesModule = {
             const movie = context.state.movies.find(movie => movie.id === movieId);
 
             movie.favorite = !movie.favorite;
-            
+
             const response = await fetch(`https://movie-holder-default-rtdb.firebaseio.com/users/${userId}/movies/${movieId}.json`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -113,7 +113,7 @@ const moviesModule = {
 
             if (!response.ok) {
                 const errorMessage = data.error.message.toLowerCase().split('_').join(' ');
-                throw new Error(errorMessage || 'Failed to remove movies.');
+                throw new Error(errorMessage || 'Failed to update movie.');
             }
         },
         filterMovies(context, payload) {

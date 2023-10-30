@@ -89,10 +89,6 @@ export default {
 .movie {
     $this: &;
 
-    &__container {
-        padding: 30px 20px;
-    }
-
     &__actions {
         display: flex;
 
@@ -109,7 +105,7 @@ export default {
 
     &__action {
         #{$this}__action-icon[class] {
-            @include size(25px);
+            @include size(35px);
         }
 
         &.is-favorite {
@@ -134,12 +130,25 @@ export default {
 
     &__wrapper {
         display: flex;
+
+        @include media-max(767) {
+            align-items: center;
+            flex-direction: column;
+        }
     }
 
     &__picture {
         flex-shrink: 0;
         margin-right: 30px;
-        width: 30%;
+        width: 40%;
+
+        @include media-max(767) {
+            margin: 0 0 20px;
+        }
+
+        @include media-max(479) {
+            width: 100%;
+        }
     }
 
     &__content {
@@ -151,6 +160,11 @@ export default {
         font-size: 4rem;
         margin-bottom: 25px;
         text-align: center;
+
+        @include media-max(767) {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
     }
 
     &__rating {
@@ -159,6 +173,10 @@ export default {
         display: flex;
         justify-content: center;
         margin-bottom: 25px;
+
+        @include media-max(767) {
+            margin-bottom: 20px;
+        }
 
         &-number {
             font-size: 2.4rem;
@@ -177,6 +195,10 @@ export default {
         justify-content: space-around;
         margin-bottom: 25px;
 
+        @include media-max(767) {
+            margin-bottom: 20px;
+        }
+
         span {
             color: $color-gray;
             padding: 5px 10px;
@@ -188,6 +210,10 @@ export default {
         justify-content: space-around;
         margin-bottom: 25px;
 
+        @include media-max(767) {
+            margin-bottom: 20px;
+        }
+
         span {
             border: 1px solid $color-1--1;
             border-radius: 4px;
@@ -195,12 +221,20 @@ export default {
             min-width: 90px;
             padding: 10px;
             text-align: center;
+
+            @include media-max(479) {
+            min-width: 80px;
+        }
         }
     }
 
     &__description {
         font-size: 2rem;
         margin-bottom: 15px;
+
+        @include media-max(767) {
+            text-align: center;
+        }
     }
 }
 </style>

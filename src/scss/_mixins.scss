@@ -16,3 +16,17 @@
 @mixin transition($prop: all, $duration: 250ms, $easing: ease-in-out, $delay: 0ms) {
     transition: $prop $duration $easing $delay;
 }
+
+// Insert custom breakpoint with custom max viewport value.
+@mixin media-max($breakpoint) {
+    @media screen and (max-width: #{$breakpoint}px) {
+        @content;
+    }
+}
+
+// Insert custom breakpoint with custom min viewport value.
+@mixin media-min($breakpoint) {
+    @media screen and (min-width: #{$breakpoint}px) {
+        @content;
+    }
+}

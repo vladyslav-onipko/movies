@@ -35,6 +35,10 @@ export default {
     justify-content: center;
     margin: 0 -10px 20px;
 
+    @include media-max(767) {
+        margin: 0 -5px 20px;
+    }
+
     &__list {
         align-items: center;
         display: flex;
@@ -47,8 +51,21 @@ export default {
             padding: 0 10px;
             width: calc(100% / 4);
 
+            @include media-max(767) {
+                padding: 0 5px;
+                width: calc(100% / 3);
+            }
+
+            @include media-max(479) {
+                width: auto;
+            }
+
             &:first-child {
                 margin-right: auto;
+            }
+
+            &:nth-child(2) {
+                order: 1;
             }
         }
     }

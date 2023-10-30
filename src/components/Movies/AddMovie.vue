@@ -95,6 +95,10 @@ export default {
         align-items: center;
         display: flex;
 
+        @include media-max(479) {
+            align-items: flex-end;
+        }
+
         .error-message {
             left: 75px;
         }
@@ -106,12 +110,21 @@ export default {
         flex-grow: 1;
         margin-bottom: 0;
 
+        @include media-max(479) {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
         label {
             color: $color-1--2;
             flex-shrink: 0;
             font-size: 2.2rem;
             font-weight: 700;
             margin: 0 10px 0 0;
+
+            @include media-max(479) {
+                margin: 0 0 5px 0;
+            }
         }
 
         input {
@@ -124,6 +137,10 @@ export default {
         .btn {
             border-radius: 4px;
             margin-right: 0;
+
+            @include media-max(479) {
+                padding: 10px 12px;
+            }
         }
     }
 }

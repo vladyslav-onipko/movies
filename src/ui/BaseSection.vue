@@ -13,7 +13,6 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-    @include size(100%);
     box-shadow: 0 0 15px 0 rgba($color-1--2,.75);
     border-radius: 4px;
     margin: 50px 0;

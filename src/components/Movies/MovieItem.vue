@@ -53,6 +53,10 @@ export default {
     
     &__container {
         display: flex;
+
+        @include media-max(767) {
+            flex-direction: column;
+        }
     }
 
     &__picture {
@@ -60,6 +64,17 @@ export default {
         margin-right: 15px;
         height: 200px;
         width: 30%;
+
+        @include media-max(767) {
+            @include size(100%);
+            align-self: center;
+            margin: 0 0 15px;
+            max-width: 50%;
+        }
+
+        @include media-max(479) {
+            max-width: 100%;
+        }
     }
 
     &__wrap {
@@ -82,6 +97,21 @@ export default {
     &__actions {
         align-self: flex-end;
         margin-top: 15px;
+
+        @include media-max(767) {
+            align-self: center;
+        }
+
+        @include media-max(479) {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .btn {
+            @include media-max(479) {
+            margin: 5px 0;
+        }
+        }
     }
 }
 </style>
