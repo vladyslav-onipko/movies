@@ -26,7 +26,7 @@ export default {
     props: ['id', 'img', 'title', 'description'],
     setup(props) {
         const store = useStore();
-        const detailLink = computed(() => 'movies' + '/' + props.id);
+        const detailLink = computed(() => '/movies/' + props.id);
 
         const removeMovie = async () => {
             try {
