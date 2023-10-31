@@ -1,6 +1,6 @@
 # You can view this project online
 
-See [Project](https://vladyslav-onipko.github.io/movies).
+See [Project](https://vladyslav-onipko.github.io/movie-holder/).
 
 ## Use test profile or create a new one
 ```
