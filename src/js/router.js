@@ -22,4 +22,14 @@ const router = createRouter({
     linkExactActiveClass: 'is-ex-active'
 });
 
+router.beforeEach((to, _ ,next) => {
+    const token = localStorage.getItem('token');
+    
+    if (to.meta.requiresUnauth && token) {
+        next('movies');
+    } else {
+        next();
+    }
+});
+
 export default router;
