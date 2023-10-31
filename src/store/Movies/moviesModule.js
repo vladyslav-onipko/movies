@@ -21,7 +21,7 @@ const moviesModule = {
     },
     actions: {
         async addMovie(context, movieName) {
-            const response = await fetch(`http://www.omdbapi.com/?t=${movieName}&apikey=${MOVIE_API_KEY}`);
+            const response = await fetch(`https://www.omdbapi.com/?t=${movieName}&apikey=${MOVIE_API_KEY}`);
             const data = await response.json();
 
             if (data.Response === 'False') {
