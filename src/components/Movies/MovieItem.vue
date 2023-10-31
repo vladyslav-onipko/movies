@@ -21,12 +21,15 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
 export default {
     props: ['id', 'img', 'title', 'description'],
     setup(props) {
         const store = useStore();
-        const detailLink = computed(() => 'movies' + '/' + props.id);
+        const route = useRoute();
+        
+        const detailLink = computed(() =>  route.path + props.id);
 
         const removeMovie = async () => {
             try {
