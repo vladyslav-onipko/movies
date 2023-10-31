@@ -2,7 +2,7 @@
     <div class="login">
         <base-button v-if="!isAuth" modifier="is-tertiary is-login" link="true" to="/login" @click="toggleNav">Login</base-button>
         <base-button v-if="!isAuth" modifier="is-secondary is-singup" link="true" to="/singup" @click="toggleNav">Sign up</base-button>
-        <base-button v-if="isAuth" modifier="is-secondary" @click="logout">Logout</base-button>
+        <base-button v-if="isAuth" modifier="is-secondary is-logout" @click="logout">Logout</base-button>
     </div>
 </template>
 
@@ -41,7 +41,8 @@ export default {
         @include media-max(767) {
             min-width: 100px;
         }
-        &.is-singup {
+        &.is-singup,
+        &.is-logout {
             @include hover() {
                 background-color: $color-2--2;
                 border: 1px solid $color-2--2;
