@@ -2,7 +2,7 @@
 
 See [Project](https://vladyslav-onipko.github.io/movies).
 
-## Use test profile or create a new one.
+## Use test profile or create a new one
 ```
 Email: test@test.com
 Password: 123456
