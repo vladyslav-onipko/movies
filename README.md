@@ -1,6 +1,14 @@
-# movie-holder
+# You can view this project online
 
-## Project setup
+See [Project](https://vladyslav-onipko.github.io/movies).
+
+## Use test profile or create a new one.
+```
+Email: test@test.com
+Password: 123456
+```
+
+### Project setup
 ```
 npm install
 ```
