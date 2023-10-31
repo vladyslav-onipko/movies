@@ -11,5 +11,5 @@ module.exports = defineConfig({
       }
     }
   },
-  publicPath: '/movie-holder/'
+  publicPath: '/movies/'
 })
