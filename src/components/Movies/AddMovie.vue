@@ -54,11 +54,12 @@ export default {
                 return;
             }
 
-            isLoading.value = true;
-
             if (!isAuth.value) {
-                router.push('login');
+                router.push('/login');
+                return;
             }
+
+            isLoading.value = true;
 
             try {
                 await store.dispatch('addMovie', movieName.value);
